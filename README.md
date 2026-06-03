@@ -7,6 +7,7 @@ The official documentation portal for the **Cloudonix Upload SDK**. Built with R
 ## 🚀 Live Links
 
 - **Developer Upload Portal:** [https://cloudonix.shivam-75.workers.dev](https://cloudonix.shivam-75.workers.dev)
+- **Official Package (NPM):** [https://www.npmjs.com/package/cloudonix](https://www.npmjs.com/package/cloudonix)
 
 ---
 
