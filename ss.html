@@ -1,0 +1,1345 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloudonix Doc</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'Outfit', 'sans-serif'],
+              mono: ['Fira Code', 'monospace'],
+            },
+            colors: {
+              slate: {
+                950: '#030712',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      h1, h2, h3, h4 {
+        font-family: 'Outfit', sans-serif;
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.3s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </head>
+  <body class="h-screen w-screen overflow-hidden flex flex-col antialiased bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200">
+    
+    <!-- Top Navbar -->
+    <nav class="h-16 shrink-0 sticky top-0 z-50 backdrop-blur-md bg-white/85 dark:bg-slate-950/85 border-b border-slate-200 dark:border-slate-800/80 transition-colors">
+      <div class="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        
+        <!-- Logo & Branding -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 shadow-inner">
+            <i data-lucide="cloud-lightning" class="w-5 h-5 text-cyan-500 dark:text-cyan-400"></i>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="font-extrabold text-slate-900 dark:text-slate-100 tracking-tight text-md sm:text-lg whitespace-nowrap">
+              Cloudonix Doc
+            </span>
+            <span id="version-badge" class="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800 rounded bg-slate-50 dark:bg-slate-900 uppercase tracking-wider">
+              v1
+            </span>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Items -->
+        <div id="desktop-nav" class="hidden lg:flex items-center gap-1.5">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Right Side Actions -->
+        <div class="flex items-center gap-1.5">
+          <!-- Generate API Key Link -->
+          <a
+            href="https://cloudonix-tb41.onrender.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hidden sm:flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-all"
+          >
+            <span id="nav-apikey-text">Generate Api Key</span>
+            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-slate-400"></i>
+          </a>
+
+          <!-- Language Switcher -->
+          <button
+            onclick="toggleLang()"
+            class="p-2 text-xs font-bold rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 border border-slate-200 dark:border-slate-800 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-all flex items-center justify-center cursor-pointer gap-1 min-w-10"
+            title="Switch language"
+          >
+            <i data-lucide="globe" class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500"></i>
+            <span id="lang-btn-text">EN</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            onclick="toggleTheme()"
+            class="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 border border-slate-200 dark:border-slate-800 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-all cursor-pointer flex items-center justify-center"
+            title="Switch theme"
+          >
+            <i id="theme-btn-icon" data-lucide="sun" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Hamburger Toggle (Mobile/Tablet) -->
+          <button
+            onclick="toggleMobileMenu()"
+            class="lg:hidden p-2 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 border border-slate-200 dark:border-slate-800 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-all"
+            aria-label="Toggle menu"
+          >
+            <i id="mobile-menu-icon" data-lucide="menu" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobile-dropdown" class="hidden absolute top-16 left-0 right-0 z-40 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-4 shadow-xl flex flex-col gap-1 lg:hidden">
+        <!-- Populated by JS -->
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="flex-1 min-h-0 flex">
+      
+
+      <!-- Content Area -->
+      <main class="flex-1 min-h-0 overflow-y-auto bg-white dark:bg-slate-950 transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+          <div id="content-area" class="animate-fade-in">
+            <!-- Dynamic Content Injected Here -->
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts / Application Logic -->
+    <script>
+      // 1. Translations Dataset
+      const translations = {
+        en: {
+          intro: "Introduction",
+          installation: "Installation",
+          usage: "Usage & API",
+          errors: "Response & Errors",
+          bestPractices: "Best Practices",
+          githubRepo: "Generate Api Key",
+          stable: "v1",
+          gettingStarted: "Getting Started",
+          apiReferenceTitle: "API Reference",
+          introSubtitle: "Documentation v1.0.0",
+          introTitlePrefix: "Introduction to ",
+          introTitleSuffix: "Cloudonix Upload SDK",
+          introDesc: "Cloudonix Upload SDK is a developer-friendly library that simplifies uploading files, images, and media assets to the Cloudonix cloud storage server. Integrate secure, lightning-fast media uploads into your Node.js, Bun, or frontend applications.",
+          feature1Title: "Developer First API",
+          feature1Desc: "Integrate file uploading in minutes with dual-module support for ES Modules (`import`) and CommonJS (`require`).",
+          feature2Title: "Secure Uploads",
+          feature2Desc: "Uses API Key authentication to securely write assets to your bucket without exposing credentials.",
+          quickPreview: "Quick Preview",
+          previewDesc: "Initialize the Cloudonix client and upload any standard File object with just a few lines of code:",
+          readyToStart: "Ready to start?",
+          readyDesc: "Head over to the Installation guide to set up the client SDK.",
+          goToInstallation: "Go to Installation",
+          installTitle: "Installation",
+          installDesc: "Install the Cloudonix SDK to begin integrating voice and media capabilities into your application. We support all major package managers.",
+          choosePackageManager: "Choose your package manager",
+          copied: "Copied",
+          copy: "Copy",
+          configuration: "Configuration",
+          step1Title: "Import the package",
+          step1Desc: "Import the SDK into your entry file to initialize the Cloudonix client.",
+          step2Title: "Add credentials",
+          step2Desc: "Secure your communication endpoints with a Cloudonix API Key configuration.",
+          securityWarning: "Security Warning",
+          securityWarningDesc: "Never expose your API key in client-side code on public repositories. Use environment variables (e.g. VITE_CLOUDONIX_API_KEY) to keep secrets secure.",
+          usageTitle: "Usage & API Guide",
+          usageDesc: "Learn how to upload files (images, videos, and PDFs) using the Cloudonix SDK in Node.js and Bun, using either Async/Await (Try/Catch) or standard Promise handlers.",
+          apiReference: "SDK API Reference",
+          apiInitDesc: "Initializes a new Cloudonix uploader client.",
+          apiKeyReq: "api_key (String, Required): Your Cloudonix authentication key.",
+          apiUploadDesc: "Uploads a file object via multipart form upload.",
+          apiFileReq: "file (File / Blob, Required): Browser/Node-compliant File object.",
+          apiReturns: "Returns a Promise resolving to { success: boolean, data?: any, error?: string }.",
+          codeImplementations: "Code Implementations",
+          copyCode: "Copy Code",
+          errorsTitle: "Response & Error Codes",
+          errorsDesc: "Understand the structure of success payloads and the error status codes returned by the Cloudonix upload endpoint.",
+          successResponse: "Success Response Structure",
+          errorResponse: "Error Response Structure",
+          responseDesc: "When an upload succeeds, the server returns a 200 HTTP status code with the following JSON structure:",
+          errDesc: "When a request is invalid, missing parameters, or has an expired token, the server returns appropriate HTTP status codes with an error payload:",
+          commonErrorCodes: "Common Error Status Codes",
+          errorColCode: "Status Code",
+          errorColDesc: "Description / Meaning",
+          errorColAction: "How to Resolve",
+          err400Desc: "Missing File or Invalid Request payload",
+          err400Action: "Ensure the form-data key is 'avatar' and the file exists.",
+          err401Desc: "Unauthorized / Invalid API Key",
+          err401Action: "Check the CLOUDONIX-API-KEY header value in configuration.",
+          err413Desc: "File size exceeds server limit (Max 10MB)",
+          err413Action: "Compress the image before uploading to reduce file size.",
+          bpTitle: "Best Practices",
+          bpDesc: "Security, configuration, and structural advice for robust and efficient media integrations.",
+          securityHeading: "1. Secure API Key Management",
+          securityDesc: "Never hardcode your credentials. Use environment variables on backend environments, or set up a secure gateway proxy in Spring Boot or Node.js Express to relay requests, shielding your credentials from client-side inspectors.",
+          perfHeading: "2. Image Optimization & Formats",
+          perfDesc: "We support PNG, JPEG, WEBP, and GIF images. For faster page load speeds on frontend apps, compress images using a client-side library (like browser-image-compression) before sending them to Cloudonix.",
+          sizeHeading: "3. Upload Limits",
+          sizeDesc: "The default upload limit per request is 10 MB. For larger assets, consider splitting uploads or compressing images dynamically.",
+          apiKeyGuideTitle: "How to Obtain an API Key",
+          apiKeyGuideDesc: "To start using the Cloudonix SDK, you need an API key from the dashboard. Follow these steps to generate and find your key:",
+          apiKeyStep1: "Visit the Cloudonix Dashboard",
+          apiKeyStep1Desc: "Go to the Cloudonix Vault website (https://cloudonix-tb41.onrender.com) and log in or register a new developer account.",
+          apiKeyStep2: "Copy your API Key",
+          apiKeyStep2Desc: "Once logged in, go to the API section or profile panel. Copy the unique API Key generated for your account (starts with `cx_`). Keep it confidential.",
+          apiKeyVisualGuide: "Visual Dashboard Guide",
+          uploadedImageLocationTitle: "Uploaded Media Vault",
+          uploadedImageLocationDesc: "All images, videos, and PDFs uploaded via the SDK/API appear in your Cloudonix Vault gallery, separated by media type. Click on any screenshot to view it in full resolution.",
+          mediaTabImages: "Images Gallery",
+          mediaTabVideos: "Videos Gallery",
+          mediaTabPdfs: "PDFs Gallery",
+          manualUploadTitle: "Manual Upload Option",
+          manualUploadDesc: "If you want to upload files without writing code, you can upload them manually using the drag & drop interface in your Cloudonix Vault dashboard:",
+          dashboardAnalyticsTitle: "Usage Analytics & Dashboard",
+          dashboardAnalyticsDesc: "The Cloudonix Vault dashboard provides a comprehensive real-time view of your media storage. You can easily track the total number of images, videos, and PDFs uploaded manually or externally via the API/SDK (External Images, External Videos, External PDFs) directly on the main panel:",
+          whyChooseTitle: "Why Choose Cloudonix Vault?",
+          whyChooseDesc: "Discover the key advantages of using Cloudonix Vault to host and manage your media assets:",
+          advFreeTitle: "100% Free to Use",
+          advFreeDesc: "Cloudonix Vault is completely free. Store, host, and access your images, videos, and PDFs without any monthly subscriptions, bandwidth limits, or hidden fees.",
+          advUnifiedTitle: "Unified Media Support",
+          advUnifiedDesc: "Say goodbye to separate storage services. Store and organize images, videos, and PDFs securely in one consolidated cloud vault.",
+          advFlexibleTitle: "Flexible Upload Options",
+          advFlexibleDesc: "Choose your preferred workflow. Automate programmatically using our developer SDKs and APIs, or upload manually via drag-and-drop on the dashboard.",
+          advAnalyticsTitle: "Smart Usage Tracking",
+          advAnalyticsDesc: "Monitor your assets in real-time. Distinguish between manual uploads and external API uploads at a single glance on the analytics panel."
+        },
+        hi: {
+          intro: "परिचय",
+          installation: "इंस्टॉलेशन",
+          usage: "यूसेज और API",
+          errors: "रिस्पांस और एरर",
+          bestPractices: "बेस्ट प्रैक्टिसेस",
+          githubRepo: "API की जनरेट करें",
+          stable: "v1.0.0 स्थिर",
+          gettingStarted: "शुरुआत करें",
+          apiReferenceTitle: "API संदर्भ",
+          introSubtitle: "दस्तावेज़ीकरण v1.0.0",
+          introTitlePrefix: "परिचय: ",
+          introTitleSuffix: "Cloudonix अपलोड SDK",
+          introDesc: "Cloudonix अपलोड SDK एक डेवलपर-अनुकूल लाइब्रेरी है जो क्लाउडोनिक्स क्लाउड स्टोरेज सर्वर पर फ़ाइलों, छवियों और मीडिया संपत्तियों को अपलोड करना आसान बनाती है। अपने Node.js, Bun, या फ़्रंटएंड ऐप्स में सुरक्षित और तेज़ मीडिया अपलोड एकीकृत करें।",
+          feature1Title: "डेवलपर-फ्रेंडली API",
+          feature1Desc: "ES Modules (`import`) और CommonJS (`require`) के डुअल-मोड्यूल सपोर्ट के साथ कुछ ही मिनटों में फ़ाइल अपलोडिंग जोड़ें।",
+          feature2Title: "सुरक्षित अपलोड",
+          feature2Desc: "बिना क्रेडेंशियल एक्सपोज़ किए बकेट में संपत्तियों को सुरक्षित रूप से लिखने के लिए API Key प्रमाणीकरण का उपयोग करता है।",
+          quickPreview: "त्वरित झलक",
+          previewDesc: "क्लाउडोनिक्स क्लाइंट को इनिशियलाइज़ करें और कुछ ही लाइनों के कोड के साथ किसी भी मानक File ऑब्जेक्ट को अपलोड करें:",
+          readyToStart: "शुरू करने के लिए तैयार हैं?",
+          readyDesc: "क्लाइंट SDK सेट करने के लिए इंस्टॉलेशन गाइड पर जाएं।",
+          goToInstallation: "इंस्टॉलेशन पर जाएं",
+          installTitle: "इंस्टॉलेशन",
+          installDesc: "अपने एप्लीकेशन में वॉयस और मीडिया अपलोड क्षमताओं को एकीकृत करने के लिए Cloudonix SDK इंस्टॉल करें। हम सभी प्रमुख पैकेज प्रबंधकों का समर्थन करते हैं।",
+          choosePackageManager: "अपना पैकेज प्रबंधक चुनें",
+          copied: "कॉपी हो गया",
+          copy: "कॉपी करें",
+          configuration: "कॉन्फ़िगरेशन",
+          step1Title: "पैकेज इम्पोर्ट करें",
+          step1Desc: "क्लाउडोनिक्स क्लाइंट को इनिशियलाइज़ करने के लिए SDK को अपनी फ़ाइल में इम्पोर्ट करें।",
+          step2Title: "क्रेडेंशियल जोड़ें",
+          step2Desc: "Cloudonix API Key कॉन्फ़िगरेशन के साथ अपने कम्युनिकेशन एंडपॉइंट्स को सुरक्षित करें।",
+          securityWarning: "सुरक्षा चेतावनी",
+          securityWarningDesc: "सार्वजनिक रिपॉजिटरी पर क्लाइंट-साइड कोड में अपनी API की (API key) को कभी भी एक्सपोज़ न करें। रहस्यों को सुरक्षित रखने के लिए पर्यावरण वेरिएबल्स (जैसे VITE_CLOUDONIX_API_KEY) का उपयोग करें।",
+          usageTitle: "यूसेज और API गाइड",
+          usageDesc: "Node.js और Bun में Cloudonix SDK का उपयोग करके फ़ाइलों (इमेज, वीडियो और पीडीएफ) को अपलोड करना सीखें, चाहे Async/Await (Try/Catch) के साथ या फिर सामान्य Promise हैंडलर्स के साथ।",
+          apiReference: "SDK API संदर्भ",
+          apiInitDesc: "एक नया क्लाउडोनिक्स अपलोडर क्लाइंट शुरू करता है।",
+          apiKeyReq: "api_key (String, आवश्यक): आपकी क्लाउडोनिक्स प्रमाणीकरण कुंजी।",
+          apiUploadDesc: "मल्टीपार्ट फॉर्म अपलोड के ज़रिए फ़ाइल ऑब्जेक्ट अपलोड करता है।",
+          apiFileReq: "file (File / Blob, आवश्यक): ब्राउज़र/Node-संगत File ऑब्जेक्ट।",
+          apiReturns: "सफलता की स्थिति ({ success: boolean, data?: any, error?: string }) लौटाता है।",
+          codeImplementations: "विभिन्न भाषाओं में कोड उदाहरण",
+          copyCode: "कोड कॉपी करें",
+          errorsTitle: "रिस्पांस और एरर कोड",
+          errorsDesc: "सक्सेस पेलोड की संरचना और क्लाउडोनिक्स अपलोड सर्वर द्वारा लौटाए गए एरर स्टेटस कोड को समझें।",
+          successResponse: "सक्सेस रिस्पांस स्ट्रक्चर (Success Structure)",
+          errorResponse: "एरर रिस्पांस स्ट्रक्चर (Error Structure)",
+          responseDesc: "जब अपलोड सफल होता है, तो सर्वर निम्नलिखित JSON संरचना के साथ 200 HTTP स्टेटस कोड लौटाता है:",
+          errDesc: "जब कोई अनुरोध अमान्य होता है, पैरामीटर गायब होते हैं, या टोकन समाप्त हो जाता है, तो सर्वर एरर पेलोड के साथ संबंधित HTTP स्टेटस कोड लौटाता है:",
+          commonErrorCodes: "सामान्य एरर स्टेटस कोड",
+          errorColCode: "स्टेटस कोड",
+          errorColDesc: "विवरण / अर्थ",
+          errorColAction: "समाधान कैसे करें",
+          err400Desc: "फ़ाइल गायब है या अमान्य रिक्वेस्ट पेलोड",
+          err400Action: "सुनिश्चित करें कि form-data की 'avatar' की (key) है और फ़ाइल सही है।",
+          err401Desc: "अनधिकृत / अमान्य API कुंजी (API Key)",
+          err413Desc: "फ़ाइल का आकार सर्वर सीमा से अधिक है (अधिकतम 10MB)",
+          err401Action: "कॉन्फ़िगरेशन में CLOUDONIX-API-KEY हेडर वैल्यू की जांच करें।",
+          err413Action: "फ़ाइल का आकार छोटा करने के लिए अपलोड करने से पहले इमेज को कंप्रेस करें।",
+          bpTitle: "बेस्ट प्रैक्टिसेस",
+          bpDesc: "सशक्त और कुशल मीडिया एकीकरण के लिए सुरक्षा, कॉन्फ़िगरेशन और संरचनात्मक सलाह।",
+          securityHeading: "1. सुरक्षित API Key प्रबंधन",
+          securityDesc: "अपनी क्रेडेंशियल्स को कभी भी हार्डकोड न करें। बैकएंड वातावरण पर पर्यावरण वेरिएबल्स (Environment Variables) का उपयोग करें, या अनुरोधों को प्रसारित करने के लिए Spring Boot या Express में एक सुरक्षित गेटवे प्रॉक्सी स्थापित करें, जिससे क्रेडेंशियल्स सुरक्षित रहें।",
+          perfHeading: "2. इमेज ऑप्टिमाइज़ेशन और फॉर्मेट्स",
+          perfDesc: "हम PNG, JPEG, WEBP, और GIF छवियों का समर्थन करते हैं। फ़्रंटएंड ऐप्स पर तेज़ पेज लोडिंग के लिए, छवियों को क्लाउडोनिक्स पर भेजने से पहले कंप्रेस करें।",
+          sizeHeading: "3. अपलोड सीमा",
+          sizeDesc: "प्रति अनुरोध डिफ़ॉल्ट अपलोड सीमा 10 MB है। इससे बड़ी फ़ाइलों के लिए, अपलोड को विभाजित करने या इमेज को डायनामिक रूप से कंप्रेस करने पर विचार करें।",
+          apiKeyGuideTitle: "API की (API Key) कैसे प्राप्त करें",
+          apiKeyGuideDesc: "Cloudonix SDK का उपयोग शुरू करने के लिए, आपको डैशबोर्ड से एक API की की आवश्यकता होगी। अपनी की जनरेट करने और खोजने के लिए इन चरणों का पालन करें:",
+          apiKeyStep1: "क्लाउडोनिक्स डैशबोर्ड पर जाएं",
+          apiKeyStep1Desc: "Go to the Cloudonix Vault website (https://cloudonix-tb41.onrender.com) and log in or register a new developer account.",
+          apiKeyStep2: "अपनी API की कॉपी करें",
+          apiKeyStep2Desc: "Once logged in, go to the API section or profile panel. Copy the unique API Key generated for your account (starts with `cx_`). Keep it confidential.",
+          apiKeyVisualGuide: "डैशबोर्ड विजुअल गाइड",
+          uploadedImageLocationTitle: "अपलोड की गई मीडिया तिजोरी (Vault)",
+          uploadedImageLocationDesc: "SDK/API के माध्यम से अपलोड की गई सभी छवियां, वीडियो और पीडीएफ आपके Cloudonix Vault गैलरी में मीडिया प्रकार के आधार पर दिखाई देंगे। फुल रिज़ॉल्यूशन में देखने के लिए किसी भी स्क्रीनशॉट पर क्लिक करें।",
+          mediaTabImages: "इमेज गैलरी",
+          mediaTabVideos: "वीडियो गैलरी",
+          mediaTabPdfs: "पीडीएफ गैलरी",
+          manualUploadTitle: "मैनुअल अपलोड विकल्प (Manual Upload)",
+          manualUploadDesc: "यदि आप बिना कोड लिखे फ़ाइलें अपलोड करना चाहते हैं, तो आप अपने Cloudonix Vault डैशबोर्ड में ड्रैग एंड ड्रॉप इंटरफ़ेस का उपयोग करके उन्हें मैन्युअल रूप से अपलोड कर सकते हैं:",
+          dashboardAnalyticsTitle: "उपयोग विश्लेषिकी और डैशबोर्ड (Dashboard Analytics)",
+          dashboardAnalyticsDesc: "Cloudonix Vault डैशबोर्ड आपके मीडिया स्टोरेज का एक व्यापक और रियल-टाइम विश्लेषण प्रदान करता है। आप मुख्य पैनल पर सीधे मैन्युअल रूप से या API/SDK के माध्यम से बाहरी रूप से अपलोड की गई छवियों, वीडियो और पीडीएफ (बाहरी छवियां, बाहरी वीडियो, बाहरी पीडीएफ) की कुल संख्या को आसानी से ट्रैक कर सकते हैं:",
+          whyChooseTitle: "Cloudonix Vault क्यों चुनें?",
+          whyChooseDesc: "अपनी मीडिया संपत्तियों को होस्ट और प्रबंधित करने के लिए Cloudonix Vault का उपयोग करने के मुख्य लाभों को जानें:",
+          advFreeTitle: "उपयोग करने के लिए 100% मुफ़्त (100% Free)",
+          advFreeDesc: "Cloudonix Vault पूरी तरह से मुफ़्त है। बिना किसी मासिक सदस्यता, बैंडविड्थ सीमा या छिपे हुए शुल्क के अपनी छवियों, वीडियो और पीडीएफ को स्टोर, होस्ट और एक्सेस करें।",
+          advUnifiedTitle: "एकीकृत मीडिया सपोर्ट",
+          advUnifiedDesc: "अलग-अलग स्टोरेज सेवाओं को अलविदा कहें। एक एकीकृत क्लाउड वॉल्ट में छवियों, वीडियो और पीडीएफ को सुरक्षित रूप से स्टोर और व्यवस्थित करें।",
+          advFlexibleTitle: "लचीले अपलोड विकल्प",
+          advFlexibleDesc: "अपना पसंदीदा वर्कफ़्लो चुनें। हमारे डेवलपर SDKs और APIs का उपयोग करके प्रोग्रामेटिक रूप से अपलोड को ऑटोमेट करें, या डैशबोर्ड पर ड्रैग एंड ड्रॉप के ज़रिए मैन्युअल रूप से अपलोड करें।",
+          advAnalyticsTitle: "स्मार्ट उपयोग ट्रैकिंग",
+          advAnalyticsDesc: "वास्तविक समय में अपनी संपत्तियों की निगरानी करें। एनालिटिक्स पैनल पर एक ही नज़र में मैन्युअल अपलोड और बाहरी API अपलोड के बीच अंतर ट्रैक करें।"
+        }
+      };
+
+      // 2. Navigation items definition
+      const navItems = [
+        { id: "intro", path: "#intro", icon: "book-open" },
+        { id: "installation", path: "#installation", icon: "terminal" },
+        { id: "usage", path: "#usage", icon: "code" },
+        { id: "errors", path: "#errors", icon: "shield-alert" },
+        { id: "bestPractices", path: "#best-practices", icon: "settings" }
+      ];
+
+      // Code Snippets Data
+      const previewCode = `import cloudonix from 'cloudonix';
+
+const uploader = new cloudonix({
+  api_key: 'YOUR_CLOUDONIX_API_KEY'
+});
+
+// Upload standard File or Blob
+const response = await uploader.upload(file);
+
+if (response.success) {
+  console.log('Uploaded image URL:', response.data.data.imageUrl);
+}`;
+
+      const installCommands = {
+        npm: 'npm install cloudonix',
+        yarn: 'yarn add cloudonix',
+        pnpm: 'pnpm add cloudonix'
+      };
+
+      const usageSnippets = {
+        esm: `import cloudonix from 'cloudonix';
+import fs from 'node:fs';
+
+const uploader = new cloudonix({
+    api_key: 'YOUR_CLOUDONIX_API_KEY'
+});
+
+try {
+    // Read local file as Buffer and construct standard File object
+    const buffer = fs.readFileSync('./my-image.png');
+    const file = new File([buffer], 'my-image.png', { type: 'image/png' });
+
+    console.log('Uploading image...');
+    const response = await uploader.upload(file);
+
+    if (response.success) {
+        console.log('Upload Success! Image URL:', response.data.data.imageUrl);
+    } else {
+        console.error('Upload Failed:', response.error);
+    }
+} catch (error) {
+    console.error('Error:', error);
+}`,
+        esm_promise: `import cloudonix from 'cloudonix';
+import fs from 'node:fs';
+
+const uploader = new cloudonix({
+    api_key: 'YOUR_CLOUDONIX_API_KEY'
+});
+
+// Read local file as Buffer and construct standard File object
+const buffer = fs.readFileSync('./my-image.png');
+const file = new File([buffer], 'my-image.png', { type: 'image/png' });
+
+console.log('Uploading image...');
+
+// Using standard Promise chain (.then & .catch)
+uploader.upload(file)
+    .then((response) => {
+        if (response.success) {
+            console.log('Upload Success! Image URL:', response.data.data.imageUrl);
+        } else {
+            console.error('Upload Failed (API Error):', response.error);
+        }
+    })
+    .catch((error) => {
+        console.error('Network or Execution Error:', error.message);
+    });`,
+        cjs: `const cloudonix = require('cloudonix');
+const fs = require('node:fs');
+
+const uploader = new cloudonix({
+    api_key: 'YOUR_CLOUDONIX_API_KEY'
+});
+
+async function main() {
+    try {
+        const buffer = fs.readFileSync('./my-image.png');
+        const file = new File([buffer], 'my-image.png', { type: 'image/png' });
+
+        const response = await uploader.upload(file);
+        if (response.success) {
+            console.log('Success! Image URL:', response.data.data.imageUrl);
+        } else {
+            console.error('Failed:', response.error);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+main();`,
+        cjs_promise: `const cloudonix = require('cloudonix');
+const fs = require('node:fs');
+
+const uploader = new cloudonix({
+    api_key: 'YOUR_CLOUDONIX_API_KEY'
+});
+
+const buffer = fs.readFileSync('./my-image.png');
+const file = new File([buffer], 'my-image.png', { type: 'image/png' });
+
+console.log('Uploading image...');
+
+// Using standard Promise chain (.then & .catch)
+uploader.upload(file)
+    .then((response) => {
+        if (response.success) {
+            console.log('Success! Image URL:', response.data.data.imageUrl);
+        } else {
+            console.error('Failed (API Error):', response.error);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+    });`,
+        express: `import express from 'express';
+import multer from 'multer';
+import cloudonix from 'cloudonix';
+
+const app = express();
+const upload = multer({ storage: multer.memoryStorage() });
+
+const uploader = new cloudonix({
+    api_key: 'YOUR_CLOUDONIX_API_KEY'
+});
+
+app.post('/upload', upload.single('image'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' });
+        }
+
+        // Convert Multer Buffer to File object
+        const fileBlob = new Blob([req.file.buffer], { type: req.file.mimetype });
+        const file = new File([fileBlob], req.file.originalname, { type: req.file.mimetype });
+
+        const response = await uploader.upload(file);
+        
+        if (response.success) {
+            res.json({ success: true, url: response.data.data.imageUrl });
+        } else {
+            res.status(500).json({ error: response.error });
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));`,
+        bun: `import cloudonix from 'cloudonix';
+
+const uploader = new cloudonix({
+    api_key: 'YOUR_CLOUDONIX_API_KEY'
+});
+
+const file = new File(
+    [await Bun.file('./my-image.png').arrayBuffer()], 
+    'my-image.png', 
+    { type: 'image/png' }
+);
+
+const response = await uploader.upload(file);
+console.log(response);`
+      };
+
+      const successJSON = `{
+  "status": 200,
+  "success": true,
+  "message": "Successfully uploaded!",
+  "data": {
+    "_id": "6a1e7aec630af6aafc563021",
+    "userId": "6a1e58936c74109da2db036f",
+    "imageUrl": "/image/1780382443493-Screenshot.png",
+    "contentType": "image/png"
+  }
+}`;
+
+      const errorJSON = `{
+  "status": 401,
+  "success": false,
+  "message": "Invalid API key or token has expired"
+}`;
+
+      // 3. Application State
+      let state = {
+        lang: localStorage.getItem("lang") || "en",
+        theme: localStorage.getItem("theme") || "dark",
+        currentPage: "intro",
+        mobileMenuOpen: false,
+        activeInstallTab: "npm",
+        activeUsageLang: "esm",
+        activeVaultTab: "images"
+      };
+
+      // 4. Utility Functions
+      function getT() {
+        return translations[state.lang] || translations.en;
+      }
+
+      function updateDocumentTitle() {
+        const t = getT();
+        let pageTitle = "";
+        switch (state.currentPage) {
+          case "intro": pageTitle = t.intro; break;
+          case "installation": pageTitle = t.installTitle; break;
+          case "usage": pageTitle = t.usage; break;
+          case "errors": pageTitle = t.errors; break;
+          case "bestPractices": pageTitle = t.bestPractices; break;
+        }
+        document.title = `${pageTitle} - Cloudonix Doc`;
+      }
+
+      // Theme toggle implementation
+      function toggleTheme() {
+        state.theme = state.theme === "dark" ? "light" : "dark";
+        localStorage.setItem("theme", state.theme);
+        applyTheme();
+      }
+
+      function applyTheme() {
+        const html = document.documentElement;
+        const themeIcon = document.getElementById("theme-btn-icon");
+        if (state.theme === "dark") {
+          html.classList.add("dark");
+          themeIcon.setAttribute("data-lucide", "sun");
+        } else {
+          html.classList.remove("dark");
+          themeIcon.setAttribute("data-lucide", "moon");
+        }
+        lucide.createIcons();
+      }
+
+      // Language toggle implementation
+      function toggleLang() {
+        state.lang = state.lang === "en" ? "hi" : "en";
+        localStorage.setItem("lang", state.lang);
+        applyLanguage();
+      }
+
+      function applyLanguage() {
+        // Update switcher button label
+        document.getElementById("lang-btn-text").textContent = state.lang.toUpperCase();
+        
+        // Update generic navbar text
+        const t = getT();
+        document.getElementById("nav-apikey-text").textContent = t.githubRepo;
+        document.getElementById("version-badge").textContent = t.stable;
+        
+        // Re-render navigation & current page content
+        renderNavigations();
+        renderActivePage();
+        updateDocumentTitle();
+      }
+
+      function toggleMobileMenu() {
+        state.mobileMenuOpen = !state.mobileMenuOpen;
+        const menu = document.getElementById("mobile-dropdown");
+        const icon = document.getElementById("mobile-menu-icon");
+        if (state.mobileMenuOpen) {
+          menu.classList.remove("hidden");
+          icon.setAttribute("data-lucide", "x");
+        } else {
+          menu.classList.add("hidden");
+          icon.setAttribute("data-lucide", "menu");
+        }
+        lucide.createIcons();
+      }
+
+      function setPage(pageId) {
+        state.currentPage = pageId;
+        state.mobileMenuOpen = false;
+        document.getElementById("mobile-dropdown").classList.add("hidden");
+        document.getElementById("mobile-menu-icon").setAttribute("data-lucide", "menu");
+        
+        // Update hash in address bar silently without reloading
+        window.location.hash = pageId === "intro" ? "#intro" : `#${pageId}`;
+        
+        renderNavigations();
+        renderActivePage();
+        updateDocumentTitle();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Render functions for Navigation links
+      function renderNavigations() {
+        const t = getT();
+        const desktopNav = document.getElementById("desktop-nav");
+        const mobileDropdown = document.getElementById("mobile-dropdown");
+
+        // 1. Desktop Nav
+        desktopNav.innerHTML = navItems.map(item => {
+          const isActive = state.currentPage === item.id;
+          return `
+            <a href="${item.path}" onclick="event.preventDefault(); setPage('${item.id}')"
+              class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
+                isActive
+                  ? "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-bold"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900/50"
+              }">
+              ${t[item.id] || item.id}
+            </a>
+          `;
+        }).join("");
+
+        // 2. Mobile Dropdown
+        mobileDropdown.innerHTML = navItems.map(item => {
+          const isActive = state.currentPage === item.id;
+          return `
+            <a href="${item.path}" onclick="event.preventDefault(); setPage('${item.id}')"
+              class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                isActive
+                  ? "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/50"
+              }">
+              <i data-lucide="${item.icon}" class="w-4 h-4"></i>
+              <span>${t[item.id] || item.id}</span>
+            </a>
+          `;
+        }).join("") + `
+          <hr class="my-2 border-slate-200 dark:border-slate-800" />
+          <a href="https://cloudonix-tb41.onrender.com" target="_blank" rel="noopener noreferrer"
+            class="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-all">
+            <span>${t.githubRepo}</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </a>
+        `;
+
+        lucide.createIcons();
+      }
+
+      // Clipboard Copier Helper
+      function copyTextToClipboard(btnId, text) {
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = document.getElementById(btnId);
+          if (!btn) return;
+          const originalHTML = btn.innerHTML;
+          btn.innerHTML = `
+            <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span class="text-emerald-400">${getT().copied}</span>
+          `;
+          lucide.createIcons();
+          setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            lucide.createIcons();
+          }, 2000);
+        });
+      }
+
+      // Sub-Tabs States triggers
+      function setInstallTab(tabId) {
+        state.activeInstallTab = tabId;
+        renderActivePage();
+      }
+
+      // Usage Languages Trigger
+      function setUsageLang(langId) {
+        state.activeUsageLang = langId;
+        renderActivePage();
+      }
+
+      // Vault Gallery Trigger
+      function setVaultTab(tabId) {
+        state.activeVaultTab = tabId;
+        renderActivePage();
+      }
+
+      // Helper to generate a CodeBlock component equivalent in HTML
+      function renderCodeBlockHtml(codeText, language, btnUniqueId) {
+        const t = getT();
+        const escapedCode = codeText.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return `
+          <div class="relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 shadow-md">
+            <div class="flex items-center justify-between px-4 py-2.5 border-b border-slate-900 bg-slate-950/80 text-xs text-slate-500">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-cyan-500"></span>
+                <span class="font-semibold uppercase tracking-wider text-slate-400">${language}</span>
+              </div>
+              <button id="${btnUniqueId}"
+                onclick="copyTextToClipboard('${btnUniqueId}', \`${codeText.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)"
+                class="flex items-center gap-1 px-2.5 py-1 rounded-lg border border-slate-800 bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all active:scale-95 cursor-pointer"
+              >
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span>${t.copy}</span>
+              </button>
+            </div>
+            <div class="p-4 font-mono text-xs md:text-sm leading-relaxed text-slate-300 overflow-x-auto">
+              <pre class="text-left whitespace-pre">${escapedCode}</pre>
+            </div>
+          </div>
+        `;
+      }
+
+      // Helper to generate a Callout component equivalent in HTML
+      function renderCalloutHtml(type, title, message) {
+        const isWarning = type === 'warning';
+        return `
+          <div class="p-4 rounded-xl border flex gap-3 text-slate-700 dark:text-slate-300 ${
+            isWarning 
+              ? 'border-amber-500/20 bg-amber-500/5' 
+              : 'border-cyan-500/20 bg-cyan-500/5'
+          }">
+            <i data-lucide="${isWarning ? 'alert-circle' : 'info'}" class="w-5 h-5 ${isWarning ? 'text-amber-500' : 'text-cyan-500'} shrink-0 mt-0.5"></i>
+            <div class="text-sm space-y-1 text-left">
+              <span class="font-semibold ${isWarning ? 'text-amber-600 dark:text-amber-400' : 'text-cyan-600 dark:text-cyan-400'}">
+                ${title}
+              </span>
+              <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                ${message}
+              </p>
+            </div>
+          </div>
+        `;
+      }
+
+      // Main Render for Active Page
+      function renderActivePage() {
+        const t = getT();
+        const content = document.getElementById("content-area");
+        
+        // Add subtle reflow trigger
+        content.classList.remove("animate-fade-in");
+        void content.offsetWidth; // trigger reflow
+        content.classList.add("animate-fade-in");
+
+        let html = "";
+
+        switch (state.currentPage) {
+          case "intro":
+            html = `
+              <div class="w-full space-y-12">
+                <!-- Hero Header -->
+                <div class="space-y-4">
+                  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
+                    <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                    <span>${t.introSubtitle}</span>
+                  </div>
+                  <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl">
+                    ${t.introTitlePrefix}
+                    <span class="bg-gradient-to-r from-cyan-500 via-teal-500 to-indigo-600 dark:from-cyan-400 dark:via-teal-400 dark:to-indigo-500 bg-clip-text text-transparent">
+                      ${t.introTitleSuffix}
+                    </span>
+                  </h1>
+                  <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl">
+                    ${t.introDesc}
+                  </p>
+                </div>
+
+                <!-- Core Features Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="group relative p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/30 dark:hover:border-cyan-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/5 hover:-translate-y-0.5">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 mb-4 group-hover:scale-110 transition-transform">
+                      <i data-lucide="cpu" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">${t.feature1Title}</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                      ${t.feature1Desc}
+                    </p>
+                  </div>
+
+                  <div class="group relative p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-teal-500/30 dark:hover:border-teal-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/5 hover:-translate-y-0.5">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 mb-4 group-hover:scale-110 transition-transform">
+                      <i data-lucide="shield" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">${t.feature2Title}</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                      ${t.feature2Desc}
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Why Choose -->
+                <div class="space-y-6 pt-4 border-t border-slate-100 dark:border-slate-800/60">
+                  <div class="space-y-2">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.whyChooseTitle}</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                      ${t.whyChooseDesc}
+                    </p>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="group relative p-6 rounded-2xl bg-emerald-500/5 dark:bg-emerald-500/5 border border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/5 hover:-translate-y-0.5">
+                      <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="gift" class="w-6 h-6"></i>
+                      </div>
+                      <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">${t.advFreeTitle}</h3>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                        ${t.advFreeDesc}
+                      </p>
+                    </div>
+
+                    <div class="group relative p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/30 dark:hover:border-cyan-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/5 hover:-translate-y-0.5">
+                      <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-450 mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="folder-open" class="w-6 h-6"></i>
+                      </div>
+                      <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">${t.advUnifiedTitle}</h3>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        ${t.advUnifiedDesc}
+                      </p>
+                    </div>
+
+                    <div class="group relative p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/30 dark:hover:border-indigo-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/5 hover:-translate-y-0.5">
+                      <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-455 mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="share-2" class="w-6 h-6"></i>
+                      </div>
+                      <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">${t.advFlexibleTitle}</h3>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        ${t.advFlexibleDesc}
+                      </p>
+                    </div>
+
+                    <div class="group relative p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-teal-500/30 dark:hover:border-teal-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/5 hover:-translate-y-0.5">
+                      <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-450 mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
+                      </div>
+                      <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">${t.advAnalyticsTitle}</h3>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                        ${t.advAnalyticsDesc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Code Snippet -->
+                <div class="space-y-4">
+                  <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.quickPreview}</h2>
+                  <p class="text-slate-600 dark:text-slate-400 text-sm">
+                    ${t.previewDesc}
+                  </p>
+                  ${renderCodeBlockHtml(previewCode, "javascript", "btn-copy-preview")}
+                </div>
+
+                <!-- Dashboard Analytics Section -->
+                <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800/60">
+                  <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.dashboardAnalyticsTitle}</h2>
+                  <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                    ${t.dashboardAnalyticsDesc}
+                  </p>
+                  <a href="https://cloudonix-tb41.onrender.com/image/1780420980716-671500254-Screenshot_2026_06_02_225251.png"
+                    target="_blank" rel="noopener noreferrer"
+                    class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
+                    <img src="https://cloudonix-tb41.onrender.com/image/1780420980716-671500254-Screenshot_2026_06_02_225251.png" 
+                      alt="Cloudonix Vault Usage Dashboard Analytics" 
+                      class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]"
+                      loading="lazy" />
+                  </a>
+                </div>
+
+                <!-- Manual Upload -->
+                <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800/60">
+                  <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.manualUploadTitle}</h2>
+                  <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                    ${t.manualUploadDesc}
+                  </p>
+                  <a href="https://cloudonix-tb41.onrender.com/image/1780420553522-523961440-Screenshot_2026_06_02_224531.png"
+                    target="_blank" rel="noopener noreferrer"
+                    class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
+                    <img src="https://cloudonix-tb41.onrender.com/image/1780420553522-523961440-Screenshot_2026_06_02_224531.png" 
+                      alt="Cloudonix Vault Manual Upload Dashboard" 
+                      class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]"
+                      loading="lazy" />
+                  </a>
+                </div>
+
+                <!-- Next Steps Footer -->
+                <div class="p-6 rounded-2xl bg-cyan-500/5 dark:bg-gradient-to-r dark:from-cyan-900/10 dark:to-teal-900/10 border border-cyan-500/20 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div>
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-1">${t.readyToStart}</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">${t.readyDesc}</p>
+                  </div>
+                  <a href="#installation" onclick="event.preventDefault(); setPage('installation')"
+                    class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-medium hover:bg-cyan-400 transition-colors text-sm shadow-sm">
+                    ${t.goToInstallation}
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                  </a>
+                </div>
+              </div>
+            `;
+            break;
+
+          case "installation":
+            const installCommandsTab = installCommands[state.activeInstallTab];
+            html = `
+              <div class="w-full space-y-12">
+                <div class="space-y-4">
+                  <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl">
+                    ${t.installTitle}
+                  </h1>
+                  <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                    ${t.installDesc}
+                  </p>
+                </div>
+
+                <!-- Tabs & Codes -->
+                <div class="space-y-4">
+                  <h2 class="text-xl font-semibold text-slate-800 dark:text-slate-200">${t.choosePackageManager}</h2>
+                  <div class="border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 rounded-xl overflow-hidden shadow-sm">
+                    <!-- Tab Headers -->
+                    <div class="flex border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950/40 px-4">
+                      ${['npm', 'yarn', 'pnpm'].map(tab => {
+                        const isTabActive = state.activeInstallTab === tab;
+                        return `
+                          <button onclick="setInstallTab('${tab}')"
+                            class="px-4 py-3 text-sm font-medium border-b-2 transition-all -mb-px cursor-pointer ${
+                              isTabActive
+                                ? 'border-cyan-500 text-cyan-600 dark:text-cyan-400 font-bold'
+                                : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                            }">
+                            ${tab.toUpperCase()}
+                          </button>
+                        `;
+                      }).join("")}
+                    </div>
+
+                    <!-- Code block -->
+                    <div class="bg-slate-950">
+                      ${renderCodeBlockHtml(installCommandsTab, "bash", "btn-copy-install")}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Steps configuration -->
+                <div class="space-y-6">
+                  <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.configuration}</h2>
+                  <div class="space-y-6">
+                    <div class="flex gap-4">
+                      <div class="flex-none flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 text-sm font-semibold">1</div>
+                      <div class="space-y-1.5 pt-1">
+                        <h3 class="text-md font-semibold text-slate-800 dark:text-slate-200">${t.step1Title}</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">${t.step1Desc}</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-4">
+                      <div class="flex-none flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 text-sm font-semibold">2</div>
+                      <div class="space-y-1.5 pt-1">
+                        <h3 class="text-md font-semibold text-slate-800 dark:text-slate-200">${t.step2Title}</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">${t.step2Desc}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Obtaining an API key -->
+                <div class="space-y-6 pt-4 border-t border-slate-100 dark:border-slate-800/60">
+                  <div class="space-y-2">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.apiKeyGuideTitle}</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">${t.apiKeyGuideDesc}</p>
+                  </div>
+                  <div class="space-y-6">
+                    <div class="flex gap-4">
+                      <div class="flex-none flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 text-sm font-semibold">1</div>
+                      <div class="space-y-1.5 pt-1">
+                        <h3 class="text-md font-semibold text-slate-800 dark:text-slate-200">${t.apiKeyStep1}</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">${t.apiKeyStep1Desc}</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-4">
+                      <div class="flex-none flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 text-sm font-semibold">2</div>
+                      <div class="space-y-1.5 pt-1">
+                        <h3 class="text-md font-semibold text-slate-800 dark:text-slate-200">${t.apiKeyStep2}</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">${t.apiKeyStep2Desc}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="space-y-3 pt-2">
+                    <h3 class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">${t.apiKeyVisualGuide}</h3>
+                    <a href="https://cloudonix-tb41.onrender.com/image/1780383932539-380402794-Screenshot_2026_06_02_123510.png"
+                      target="_blank" rel="noopener noreferrer"
+                      class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
+                      <img src="https://cloudonix-tb41.onrender.com/image/1780383932539-380402794-Screenshot_2026_06_02_123510.png" 
+                        alt="Cloudonix Vault API Key Dashboard" 
+                        class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]"
+                        loading="lazy" />
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Warning Callout -->
+                ${renderCalloutHtml('warning', t.securityWarning, t.securityWarningDesc)}
+              </div>
+            `;
+            break;
+
+          case "usage":
+            const usageLanguages = [
+              { id: 'esm', label: 'ESM (Async/Await)', type: 'javascript' },
+              { id: 'esm_promise', label: 'ESM (Promises)', type: 'javascript' },
+              { id: 'cjs', label: 'CommonJS (Async/Await)', type: 'javascript' },
+              { id: 'cjs_promise', label: 'CommonJS (Promises)', type: 'javascript' },
+              { id: 'express', label: 'Node + Express', type: 'javascript' },
+              { id: 'bun', label: 'Bun', type: 'javascript' },
+            ];
+            const activeLangObj = usageLanguages.find(l => l.id === state.activeUsageLang);
+            const activeCode = usageSnippets[state.activeUsageLang];
+
+            html = `
+              <div class="w-full space-y-12">
+                <div class="space-y-4">
+                  <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl">
+                    ${t.usageTitle}
+                  </h1>
+                  <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                    ${t.usageDesc}
+                  </p>
+                </div>
+
+                <!-- API Reference -->
+                <div class="space-y-6">
+                  <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.apiReference}</h2>
+                  <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-6 bg-slate-50 dark:bg-slate-900/40 space-y-4">
+                    <div>
+                      <code class="px-2 py-1 rounded bg-slate-200 dark:bg-slate-800 text-sm font-semibold text-cyan-600 dark:text-cyan-400">new cloudonix(config)</code>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">${t.apiInitDesc}</p>
+                      <ul class="list-disc list-inside text-xs text-slate-500 dark:text-slate-400 pl-4 mt-2 space-y-1">
+                        <li><code class="text-slate-700 dark:text-slate-300">${t.apiKeyReq}</code></li>
+                      </ul>
+                    </div>
+                    <hr class="border-slate-200 dark:border-slate-800" />
+                    <div>
+                      <code class="px-2 py-1 rounded bg-slate-200 dark:bg-slate-800 text-sm font-semibold text-cyan-600 dark:text-cyan-400">uploader.upload(file)</code>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">${t.apiUploadDesc}</p>
+                      <ul class="list-disc list-inside text-xs text-slate-500 dark:text-slate-400 pl-4 mt-2 space-y-1">
+                        <li><code class="text-slate-700 dark:text-slate-300">${t.apiFileReq}</code></li>
+                        <li>${t.apiReturns}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Visual Guide Link -->
+                <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-6 bg-slate-50 dark:bg-slate-900/40 space-y-4">
+                  <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">${t.apiKeyGuideTitle}</h3>
+                  <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">${t.apiKeyGuideDesc}</p>
+                  <a href="https://cloudonix-tb41.onrender.com/image/1780383932539-380402794-Screenshot_2026_06_02_123510.png"
+                    target="_blank" rel="noopener noreferrer"
+                    class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
+                    <img src="https://cloudonix-tb41.onrender.com/image/1780383932539-380402794-Screenshot_2026_06_02_123510.png" 
+                      alt="Cloudonix Vault Dashboard API Key" 
+                      class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]"
+                      loading="lazy" />
+                  </a>
+                </div>
+
+                <!-- Dynamic Code Switchers -->
+                <div class="space-y-6">
+                  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.codeImplementations}</h2>
+                    <div class="flex flex-wrap gap-2">
+                      ${usageLanguages.map(lang => {
+                        const isLangActive = state.activeUsageLang === lang.id;
+                        return `
+                          <button onclick="setUsageLang('${lang.id}')"
+                            class="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
+                              isLangActive
+                                ? 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20 dark:text-cyan-400 dark:border-cyan-500/20 font-semibold'
+                                : 'bg-white dark:bg-slate-950 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 border-slate-200 dark:border-slate-800'
+                            }">
+                            ${lang.label}
+                          </button>
+                        `;
+                      }).join("")}
+                    </div>
+                  </div>
+
+                  <!-- Injected code box -->
+                  ${renderCodeBlockHtml(activeCode, activeLangObj.type, "btn-copy-usage")}
+                </div>
+              </div>
+            `;
+            break;
+
+          case "errors":
+            html = `
+              <div class="w-full space-y-12">
+                <div class="space-y-4">
+                  <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl">
+                    ${t.errorsTitle}
+                  </h1>
+                  <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                    ${t.errorsDesc}
+                  </p>
+                </div>
+
+                <!-- Responses Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <!-- Success Response -->
+                  <div class="space-y-4">
+                    <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold">
+                      <i data-lucide="check-circle" class="w-5 h-5"></i>
+                      <h2>${t.successResponse}</h2>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">${t.responseDesc}</p>
+                    ${renderCodeBlockHtml(successJSON, "json", "btn-copy-success-json")}
+                  </div>
+
+                  <!-- Error Response -->
+                  <div class="space-y-4">
+                    <div class="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold">
+                      <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                      <h2>${t.errorResponse}</h2>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">${t.errDesc}</p>
+                    ${renderCodeBlockHtml(errorJSON, "json", "btn-copy-error-json")}
+                  </div>
+                </div>
+
+                <!-- Vault Sections -->
+                <div class="space-y-4 pt-8 border-t border-slate-200 dark:border-slate-800/80">
+                  <div>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.uploadedImageLocationTitle}</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed font-normal">${t.uploadedImageLocationDesc}</p>
+                  </div>
+
+                  <!-- Vault switcher tabs -->
+                  <div class="flex gap-2 p-1 bg-slate-100 dark:bg-slate-900 rounded-xl w-fit border border-slate-200 dark:border-slate-800/60">
+                    <button onclick="setVaultTab('images')"
+                      class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                        state.activeVaultTab === 'images'
+                          ? 'bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm font-bold'
+                          : 'text-slate-500 hover:text-slate-850 dark:hover:text-slate-355'
+                      }">
+                      <i data-lucide="image" class="w-3.5 h-3.5"></i>
+                      <span>${t.mediaTabImages}</span>
+                    </button>
+                    <button onclick="setVaultTab('videos')"
+                      class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                        state.activeVaultTab === 'videos'
+                          ? 'bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm font-bold'
+                          : 'text-slate-500 hover:text-slate-850 dark:hover:text-slate-355'
+                      }">
+                      <i data-lucide="video" class="w-3.5 h-3.5"></i>
+                      <span>${t.mediaTabVideos}</span>
+                    </button>
+                    <button onclick="setVaultTab('pdfs')"
+                      class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                        state.activeVaultTab === 'pdfs'
+                          ? 'bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm font-bold'
+                          : 'text-slate-500 hover:text-slate-850 dark:hover:text-slate-355'
+                      }">
+                      <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                      <span>${t.mediaTabPdfs}</span>
+                    </button>
+                  </div>
+
+                  <!-- Vault tab viewer -->
+                  ${state.activeVaultTab === 'images' ? `
+                    <a href="https://cloudonix-tb41.onrender.com/image/1780420196049-595999850-Screenshot_2026_06_02_223933.png"
+                      target="_blank" rel="noopener noreferrer"
+                      class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
+                      <img src="https://cloudonix-tb41.onrender.com/image/1780420196049-595999850-Screenshot_2026_06_02_223933.png" 
+                        alt="Cloudonix Vault Uploaded Images Gallery" 
+                        class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]" />
+                    </a>
+                  ` : ""}
+                  ${state.activeVaultTab === 'videos' ? `
+                    <a href="https://cloudonix-tb41.onrender.com/image/1780420358431-246608771-Screenshot_2026_06_02_224210.png"
+                      target="_blank" rel="noopener noreferrer"
+                      class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
+                      <img src="https://cloudonix-tb41.onrender.com/image/1780420358431-246608771-Screenshot_2026_06_02_224210.png" 
+                        alt="Cloudonix Vault Uploaded Videos Gallery" 
+                        class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]" />
+                    </a>
+                  ` : ""}
+                  ${state.activeVaultTab === 'pdfs' ? `
+                    <a href="https://cloudonix-tb41.onrender.com/image/1780420746369-290875787-Screenshot_2026_06_02_224858.png"
+                      target="_blank" rel="noopener noreferrer"
+                      class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
+                      <img src="https://cloudonix-tb41.onrender.com/image/1780420746369-290875787-Screenshot_2026_06_02_224858.png" 
+                        alt="Cloudonix Vault Uploaded PDFs Gallery" 
+                        class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]" />
+                    </a>
+                  ` : ""}
+                </div>
+
+                <!-- Error Table -->
+                <div class="space-y-4">
+                  <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.commonErrorCodes}</h2>
+                  <div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900/10 shadow-sm">
+                    <div class="overflow-x-auto">
+                      <table class="w-full border-collapse text-left text-sm text-slate-600 dark:text-slate-400 font-normal">
+                        <thead class="border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950/40 text-slate-700 dark:text-slate-200 font-semibold">
+                          <tr>
+                            <th class="px-6 py-4">${t.errorColCode}</th>
+                            <th class="px-6 py-4">${t.errorColDesc}</th>
+                            <th class="px-6 py-4">${t.errorColAction}</th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 dark:divide-slate-800/60 font-normal">
+                          <tr>
+                            <td class="px-6 py-4 font-mono font-bold text-rose-600 dark:text-rose-400">400 Bad Request</td>
+                            <td class="px-6 py-4">${t.err400Desc}</td>
+                            <td class="px-6 py-4 text-xs">${t.err400Action}</td>
+                          </tr>
+                          <tr>
+                            <td class="px-6 py-4 font-mono font-bold text-rose-600 dark:text-rose-400">401 Unauthorized</td>
+                            <td class="px-6 py-4">${t.err401Desc}</td>
+                            <td class="px-6 py-4 text-xs">${t.err401Action}</td>
+                          </tr>
+                          <tr>
+                            <td class="px-6 py-4 font-mono font-bold text-rose-600 dark:text-rose-400">413 Payload Too Large</td>
+                            <td class="px-6 py-4">${t.err413Desc}</td>
+                            <td class="px-6 py-4 text-xs">${t.err413Action}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+            break;
+
+          case "bestPractices":
+            html = `
+              <div class="w-full space-y-12">
+                <div class="space-y-4">
+                  <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl">
+                    ${t.bpTitle}
+                  </h1>
+                  <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                    ${t.bpDesc}
+                  </p>
+                </div>
+
+                <!-- Best Practices Cards -->
+                <div class="space-y-8">
+                  <div class="flex gap-4 p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+                    <div class="flex-none flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
+                      <i data-lucide="key-round" class="w-5 h-5"></i>
+                    </div>
+                    <div class="space-y-2 text-left">
+                      <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">${t.securityHeading}</h3>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">${t.securityDesc}</p>
+                    </div>
+                  </div>
+
+                  <div class="flex gap-4 p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+                    <div class="flex-none flex h-10 w-10 items-center justify-center rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400">
+                      <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    </div>
+                    <div class="space-y-2 text-left">
+                      <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">${t.perfHeading}</h3>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">${t.perfDesc}</p>
+                    </div>
+                  </div>
+
+                  <div class="flex gap-4 p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+                    <div class="flex-none flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
+                      <i data-lucide="sliders" class="w-5 h-5"></i>
+                    </div>
+                    <div class="space-y-2 text-left">
+                      <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">${t.sizeHeading}</h3>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">${t.sizeDesc}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+            break;
+        }
+
+        content.innerHTML = html;
+        lucide.createIcons();
+      }
+
+      // 5. Initializers
+      function initializeApp() {
+        applyTheme();
+        applyLanguage();
+
+        // Router based on Hash
+        const hash = window.location.hash.replace("#", "");
+        const validPages = ["intro", "installation", "usage", "errors", "bestPractices"];
+        
+        let initialPage = "intro";
+        // map dash-separated hash back to camelCase pageIds
+        if (hash === "best-practices") {
+          initialPage = "bestPractices";
+        } else if (validPages.includes(hash)) {
+          initialPage = hash;
+        }
+
+        setPage(initialPage);
+      }
+
+      // Launch
+      window.addEventListener("DOMContentLoaded", initializeApp);
+      window.addEventListener("hashchange", () => {
+        const hash = window.location.hash.replace("#", "");
+        const matched = hash === "best-practices" ? "bestPractices" : hash;
+        if (matched && matched !== state.currentPage && ["intro", "installation", "usage", "errors", "bestPractices"].includes(matched)) {
+          setPage(matched);
+        }
+      });
+    </script>
+  </body>
+</html>
