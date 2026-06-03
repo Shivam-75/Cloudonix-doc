@@ -78,7 +78,7 @@
         <div class="flex items-center gap-1.5">
           <!-- Generate API Key Link -->
           <a
-            href="https://cloudonix-tb41.onrender.com"
+            href="https://cloudonix.shivam-75.workers.dev/dashboard"
             target="_blank"
             rel="noopener noreferrer"
             class="hidden sm:flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-all"
@@ -213,7 +213,7 @@
           apiKeyGuideTitle: "How to Obtain an API Key",
           apiKeyGuideDesc: "To start using the Cloudonix SDK, you need an API key from the dashboard. Follow these steps to generate and find your key:",
           apiKeyStep1: "Visit the Cloudonix Dashboard",
-          apiKeyStep1Desc: "Go to the Cloudonix Vault website (https://cloudonix-tb41.onrender.com) and log in or register a new developer account.",
+          apiKeyStep1Desc: "Go to the Cloudonix Vault website (https://cloudonix.shivam-75.workers.dev/dashboard) and log in or register a new developer account.",
           apiKeyStep2: "Copy your API Key",
           apiKeyStep2Desc: "Once logged in, go to the API section or profile panel. Copy the unique API Key generated for your account (starts with `cx_`). Keep it confidential.",
           apiKeyVisualGuide: "Visual Dashboard Guide",
@@ -235,7 +235,12 @@
           advFlexibleTitle: "Flexible Upload Options",
           advFlexibleDesc: "Choose your preferred workflow. Automate programmatically using our developer SDKs and APIs, or upload manually via drag-and-drop on the dashboard.",
           advAnalyticsTitle: "Smart Usage Tracking",
-          advAnalyticsDesc: "Monitor your assets in real-time. Distinguish between manual uploads and external API uploads at a single glance on the analytics panel."
+          advAnalyticsDesc: "Monitor your assets in real-time. Distinguish between manual uploads and external API uploads at a single glance on the analytics panel.",
+          npmPackageTitle: "NPM Registry Package",
+          npmPackageDesc: "The cloudonix package is published on the official npm registry. You can check package statistics, versions, and bundle sizes directly on npmjs.",
+          viewOnNpm: "View on npmjs.com",
+          usageVisualGuideTitle: "Visual SDK Integration Guide",
+          usageVisualGuideDesc: "Here is a step-by-step visual demonstration of how to integrate and use the cloudonix SDK in your code:"
         },
         hi: {
           intro: "परिचय",
@@ -309,7 +314,7 @@
           apiKeyGuideTitle: "API की (API Key) कैसे प्राप्त करें",
           apiKeyGuideDesc: "Cloudonix SDK का उपयोग शुरू करने के लिए, आपको डैशबोर्ड से एक API की की आवश्यकता होगी। अपनी की जनरेट करने और खोजने के लिए इन चरणों का पालन करें:",
           apiKeyStep1: "क्लाउडोनिक्स डैशबोर्ड पर जाएं",
-          apiKeyStep1Desc: "Go to the Cloudonix Vault website (https://cloudonix-tb41.onrender.com) and log in or register a new developer account.",
+          apiKeyStep1Desc: "Go to the Cloudonix Vault website (https://cloudonix.shivam-75.workers.dev/dashboard) and log in or register a new developer account.",
           apiKeyStep2: "अपनी API की कॉपी करें",
           apiKeyStep2Desc: "Once logged in, go to the API section or profile panel. Copy the unique API Key generated for your account (starts with `cx_`). Keep it confidential.",
           apiKeyVisualGuide: "डैशबोर्ड विजुअल गाइड",
@@ -331,7 +336,12 @@
           advFlexibleTitle: "लचीले अपलोड विकल्प",
           advFlexibleDesc: "अपना पसंदीदा वर्कफ़्लो चुनें। हमारे डेवलपर SDKs और APIs का उपयोग करके प्रोग्रामेटिक रूप से अपलोड को ऑटोमेट करें, या डैशबोर्ड पर ड्रैग एंड ड्रॉप के ज़रिए मैन्युअल रूप से अपलोड करें।",
           advAnalyticsTitle: "स्मार्ट उपयोग ट्रैकिंग",
-          advAnalyticsDesc: "वास्तविक समय में अपनी संपत्तियों की निगरानी करें। एनालिटिक्स पैनल पर एक ही नज़र में मैन्युअल अपलोड और बाहरी API अपलोड के बीच अंतर ट्रैक करें।"
+          advAnalyticsDesc: "वास्तविक समय में अपनी संपत्तियों की निगरानी करें। एनालिटिक्स पैनल पर एक ही नज़र में मैन्युअल अपलोड और बाहरी API अपलोड के बीच अंतर ट्रैक करें।",
+          npmPackageTitle: "NPM रजिस्ट्री पैकेज",
+          npmPackageDesc: "cloudonix पैकेज आधिकारिक npm रजिस्ट्री पर प्रकाशित है। आप सीधे npmjs पर पैकेज के आंकड़े, संस्करण और बंडल साइज देख सकते हैं।",
+          viewOnNpm: "npmjs.com पर देखें",
+          usageVisualGuideTitle: "विजुअल SDK इंटीग्रेशन गाइड",
+          usageVisualGuideDesc: "यहाँ आपके कोड में cloudonix SDK को एकीकृत और उपयोग करने का चरण-दर-चरण विजुअल प्रदर्शन दिया गया है:"
         }
       };
 
@@ -666,7 +676,7 @@ console.log(response);`
           `;
         }).join("") + `
           <hr class="my-2 border-slate-200 dark:border-slate-800" />
-          <a href="https://cloudonix-tb41.onrender.com" target="_blank" rel="noopener noreferrer"
+          <a href="https://cloudonix.shivam-75.workers.dev/dashboard" target="_blank" rel="noopener noreferrer"
             class="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-all">
             <span>${t.githubRepo}</span>
             <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
@@ -966,6 +976,30 @@ console.log(response);`
                   </div>
                 </div>
 
+                <!-- NPM Registry Info -->
+                <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800/60">
+                  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                      <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.npmPackageTitle}</h2>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed font-normal">${t.npmPackageDesc}</p>
+                    </div>
+                    <a href="https://www.npmjs.com/package/cloudonix"
+                      target="_blank" rel="noopener noreferrer"
+                      class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl text-cyan-600 bg-cyan-500/10 hover:bg-cyan-500/20 dark:text-cyan-400 dark:bg-cyan-500/5 dark:hover:bg-cyan-500/10 border border-cyan-500/20 transition-all cursor-pointer">
+                      <span>${t.viewOnNpm}</span>
+                      <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                  </div>
+                  <a href="https://www.npmjs.com/package/cloudonix"
+                    target="_blank" rel="noopener noreferrer"
+                    class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
+                    <img src="https://cloudonix-tb41.onrender.com/image/1780482590021-817173873-Screenshot_2026_06_03_155841.png" 
+                      alt="Cloudonix npm package registry" 
+                      class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]"
+                      loading="lazy" />
+                  </a>
+                </div>
+
                 <!-- Steps configuration -->
                 <div class="space-y-6">
                   <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.configuration}</h2>
@@ -1077,13 +1111,13 @@ console.log(response);`
 
                 <!-- Visual Guide Link -->
                 <div class="border border-slate-200 dark:border-slate-800 rounded-2xl p-6 bg-slate-50 dark:bg-slate-900/40 space-y-4">
-                  <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">${t.apiKeyGuideTitle}</h3>
-                  <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">${t.apiKeyGuideDesc}</p>
-                  <a href="https://cloudonix-tb41.onrender.com/image/1780383932539-380402794-Screenshot_2026_06_02_123510.png"
+                  <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">${t.usageVisualGuideTitle}</h3>
+                  <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">${t.usageVisualGuideDesc}</p>
+                  <a href="https://cloudonix-tb41.onrender.com/image/1780482684620-628357705-Screenshot_2026_06_03_160057.png"
                     target="_blank" rel="noopener noreferrer"
                     class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
-                    <img src="https://cloudonix-tb41.onrender.com/image/1780383932539-380402794-Screenshot_2026_06_02_123510.png" 
-                      alt="Cloudonix Vault Dashboard API Key" 
+                    <img src="https://cloudonix-tb41.onrender.com/image/1780482684620-628357705-Screenshot_2026_06_03_160057.png" 
+                      alt="Cloudonix SDK Code Usage Visual Guide" 
                       class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]"
                       loading="lazy" />
                   </a>
