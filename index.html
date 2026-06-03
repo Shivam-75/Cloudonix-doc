@@ -7,63 +7,84 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet" />
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    
+
     <script>
       tailwind.config = {
-        darkMode: 'class',
+        darkMode: "class",
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'Outfit', 'sans-serif'],
-              mono: ['Fira Code', 'monospace'],
+              sans: ["Inter", "Outfit", "sans-serif"],
+              mono: ["Fira Code", "monospace"],
             },
             colors: {
               slate: {
-                950: '#030712',
-              }
-            }
-          }
-        }
-      }
+                950: "#030712",
+              },
+            },
+          },
+        },
+      };
     </script>
     <style>
-      body {
-        font-family: 'Inter', sans-serif;
+      ::-webkit-scrollbar {
+        display: none;
       }
-      h1, h2, h3, h4 {
-        font-family: 'Outfit', sans-serif;
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Outfit", sans-serif;
       }
       .animate-fade-in {
         animation: fadeIn 0.3s ease-out forwards;
       }
       @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(8px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     </style>
   </head>
-  <body class="h-screen w-screen overflow-hidden flex flex-col antialiased bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200">
-    
+  <body
+    class="h-screen w-screen overflow-hidden flex flex-col antialiased bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200">
     <!-- Top Navbar -->
-    <nav class="h-16 shrink-0 sticky top-0 z-50 backdrop-blur-md bg-white/85 dark:bg-slate-950/85 border-b border-slate-200 dark:border-slate-800/80 transition-colors">
-      <div class="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        
+    <nav
+      class="h-16 shrink-0 sticky top-0 z-50 backdrop-blur-md bg-white/85 dark:bg-slate-950/85 border-b border-slate-200 dark:border-slate-800/80 transition-colors">
+      <div
+        class="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <!-- Logo & Branding -->
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 shadow-inner">
-            <i data-lucide="cloud-lightning" class="w-5 h-5 text-cyan-500 dark:text-cyan-400"></i>
+          <div
+            class="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 shadow-inner">
+            <i
+              data-lucide="cloud-lightning"
+              class="w-5 h-5 text-cyan-500 dark:text-cyan-400"></i>
           </div>
           <div class="flex items-baseline gap-2">
-            <span class="font-extrabold text-slate-900 dark:text-slate-100 tracking-tight text-md sm:text-lg whitespace-nowrap">
+            <span
+              class="font-extrabold text-slate-900 dark:text-slate-100 tracking-tight text-md sm:text-lg whitespace-nowrap">
               Cloudonix Doc
             </span>
-            <span id="version-badge" class="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800 rounded bg-slate-50 dark:bg-slate-900 uppercase tracking-wider">
+            <span
+              id="version-badge"
+              class="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-800 rounded bg-slate-50 dark:bg-slate-900 uppercase tracking-wider">
               v1
             </span>
           </div>
@@ -76,24 +97,36 @@
 
         <!-- Right Side Actions -->
         <div class="flex items-center gap-1.5">
+          <!-- Package Link -->
+          <a
+            href="https://www.npmjs.com/package/cloudonix"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hidden sm:flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-all">
+            <span id="nav-package-text">Package</span>
+            <i data-lucide="box" class="w-3.5 h-3.5 text-slate-400"></i>
+          </a>
+
           <!-- Generate API Key Link -->
           <a
             href="https://cloudonix.shivam-75.workers.dev/dashboard"
             target="_blank"
             rel="noopener noreferrer"
-            class="hidden sm:flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-all"
-          >
+            class="hidden sm:flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-all">
             <span id="nav-apikey-text">Generate Api Key</span>
-            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-slate-400"></i>
+            <i
+              data-lucide="arrow-up-right"
+              class="w-3.5 h-3.5 text-slate-400"></i>
           </a>
 
           <!-- Language Switcher -->
           <button
             onclick="toggleLang()"
             class="p-2 text-xs font-bold rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 border border-slate-200 dark:border-slate-800 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-all flex items-center justify-center cursor-pointer gap-1 min-w-10"
-            title="Switch language"
-          >
-            <i data-lucide="globe" class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500"></i>
+            title="Switch language">
+            <i
+              data-lucide="globe"
+              class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500"></i>
             <span id="lang-btn-text">EN</span>
           </button>
 
@@ -101,8 +134,7 @@
           <button
             onclick="toggleTheme()"
             class="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 border border-slate-200 dark:border-slate-800 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-all cursor-pointer flex items-center justify-center"
-            title="Switch theme"
-          >
+            title="Switch theme">
             <i id="theme-btn-icon" data-lucide="sun" class="w-4 h-4"></i>
           </button>
 
@@ -110,25 +142,25 @@
           <button
             onclick="toggleMobileMenu()"
             class="lg:hidden p-2 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 border border-slate-200 dark:border-slate-800 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-all"
-            aria-label="Toggle menu"
-          >
+            aria-label="Toggle menu">
             <i id="mobile-menu-icon" data-lucide="menu" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
 
       <!-- Mobile Dropdown Menu -->
-      <div id="mobile-dropdown" class="hidden absolute top-16 left-0 right-0 z-40 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-4 shadow-xl flex flex-col gap-1 lg:hidden">
+      <div
+        id="mobile-dropdown"
+        class="hidden absolute top-16 left-0 right-0 z-40 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-4 shadow-xl flex flex-col gap-1 lg:hidden">
         <!-- Populated by JS -->
       </div>
     </nav>
 
     <!-- Main Container -->
     <div class="flex-1 min-h-0 flex">
-      
-
       <!-- Content Area -->
-      <main class="flex-1 min-h-0 overflow-y-auto bg-white dark:bg-slate-950 transition-colors duration-200">
+      <main
+        class="flex-1 min-h-0 overflow-y-auto bg-white dark:bg-slate-950 transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
           <div id="content-area" class="animate-fade-in">
             <!-- Dynamic Content Injected Here -->
@@ -154,93 +186,130 @@
           introSubtitle: "Documentation v1.0.0",
           introTitlePrefix: "Introduction to ",
           introTitleSuffix: "Cloudonix Upload SDK",
-          introDesc: "Cloudonix Upload SDK is a developer-friendly library that simplifies uploading files, images, and media assets to the Cloudonix cloud storage server. Integrate secure, lightning-fast media uploads into your Node.js, Bun, or frontend applications.",
+          introDesc:
+            "Cloudonix Upload SDK is a developer-friendly library that simplifies uploading files, images, and media assets to the Cloudonix cloud storage server. Integrate secure, lightning-fast media uploads into your Node.js, Bun, or frontend applications.",
           feature1Title: "Developer First API",
-          feature1Desc: "Integrate file uploading in minutes with dual-module support for ES Modules (`import`) and CommonJS (`require`).",
+          feature1Desc:
+            "Integrate file uploading in minutes with dual-module support for ES Modules (`import`) and CommonJS (`require`).",
           feature2Title: "Secure Uploads",
-          feature2Desc: "Uses API Key authentication to securely write assets to your bucket without exposing credentials.",
+          feature2Desc:
+            "Uses API Key authentication to securely write assets to your bucket without exposing credentials.",
           quickPreview: "Quick Preview",
-          previewDesc: "Initialize the Cloudonix client and upload any standard File object with just a few lines of code:",
+          previewDesc:
+            "Initialize the Cloudonix client and upload any standard File object with just a few lines of code:",
           readyToStart: "Ready to start?",
-          readyDesc: "Head over to the Installation guide to set up the client SDK.",
+          readyDesc:
+            "Head over to the Installation guide to set up the client SDK.",
           goToInstallation: "Go to Installation",
           installTitle: "Installation",
-          installDesc: "Install the Cloudonix SDK to begin integrating voice and media capabilities into your application. We support all major package managers.",
+          installDesc:
+            "Install the Cloudonix SDK to begin integrating voice and media capabilities into your application. We support all major package managers.",
           choosePackageManager: "Choose your package manager",
           copied: "Copied",
           copy: "Copy",
           configuration: "Configuration",
           step1Title: "Import the package",
-          step1Desc: "Import the SDK into your entry file to initialize the Cloudonix client.",
+          step1Desc:
+            "Import the SDK into your entry file to initialize the Cloudonix client.",
           step2Title: "Add credentials",
-          step2Desc: "Secure your communication endpoints with a Cloudonix API Key configuration.",
+          step2Desc:
+            "Secure your communication endpoints with a Cloudonix API Key configuration.",
           securityWarning: "Security Warning",
-          securityWarningDesc: "Never expose your API key in client-side code on public repositories. Use environment variables (e.g. VITE_CLOUDONIX_API_KEY) to keep secrets secure.",
+          securityWarningDesc:
+            "Never expose your API key in client-side code on public repositories. Use environment variables (e.g. VITE_CLOUDONIX_API_KEY) to keep secrets secure.",
           usageTitle: "Usage & API Guide",
-          usageDesc: "Learn how to upload files (images, videos, and PDFs) using the Cloudonix SDK in Node.js and Bun, using either Async/Await (Try/Catch) or standard Promise handlers.",
+          usageDesc:
+            "Learn how to upload files (images, videos, and PDFs) using the Cloudonix SDK in Node.js and Bun, using either Async/Await (Try/Catch) or standard Promise handlers.",
           apiReference: "SDK API Reference",
           apiInitDesc: "Initializes a new Cloudonix uploader client.",
-          apiKeyReq: "api_key (String, Required): Your Cloudonix authentication key.",
+          apiKeyReq:
+            "api_key (String, Required): Your Cloudonix authentication key.",
           apiUploadDesc: "Uploads a file object via multipart form upload.",
-          apiFileReq: "file (File / Blob, Required): Browser/Node-compliant File object.",
-          apiReturns: "Returns a Promise resolving to { success: boolean, data?: any, error?: string }.",
+          apiFileReq:
+            "file (File / Blob, Required): Browser/Node-compliant File object.",
+          apiReturns:
+            "Returns a Promise resolving to { success: boolean, data?: any, error?: string }.",
           codeImplementations: "Code Implementations",
           copyCode: "Copy Code",
           errorsTitle: "Response & Error Codes",
-          errorsDesc: "Understand the structure of success payloads and the error status codes returned by the Cloudonix upload endpoint.",
+          errorsDesc:
+            "Understand the structure of success payloads and the error status codes returned by the Cloudonix upload endpoint.",
           successResponse: "Success Response Structure",
           errorResponse: "Error Response Structure",
-          responseDesc: "When an upload succeeds, the server returns a 200 HTTP status code with the following JSON structure:",
-          errDesc: "When a request is invalid, missing parameters, or has an expired token, the server returns appropriate HTTP status codes with an error payload:",
+          responseDesc:
+            "When an upload succeeds, the server returns a 200 HTTP status code with the following JSON structure:",
+          errDesc:
+            "When a request is invalid, missing parameters, or has an expired token, the server returns appropriate HTTP status codes with an error payload:",
           commonErrorCodes: "Common Error Status Codes",
           errorColCode: "Status Code",
           errorColDesc: "Description / Meaning",
           errorColAction: "How to Resolve",
           err400Desc: "Missing File or Invalid Request payload",
-          err400Action: "Ensure the form-data key is 'avatar' and the file exists.",
+          err400Action:
+            "Ensure the form-data key is 'avatar' and the file exists.",
           err401Desc: "Unauthorized / Invalid API Key",
-          err401Action: "Check the CLOUDONIX-API-KEY header value in configuration.",
+          err401Action:
+            "Check the CLOUDONIX-API-KEY header value in configuration.",
           err413Desc: "File size exceeds server limit (Max 10MB)",
-          err413Action: "Compress the image before uploading to reduce file size.",
+          err413Action:
+            "Compress the image before uploading to reduce file size.",
           bpTitle: "Best Practices",
-          bpDesc: "Security, configuration, and structural advice for robust and efficient media integrations.",
+          bpDesc:
+            "Security, configuration, and structural advice for robust and efficient media integrations.",
           securityHeading: "1. Secure API Key Management",
-          securityDesc: "Never hardcode your credentials. Use environment variables on backend environments, or set up a secure gateway proxy in Spring Boot or Node.js Express to relay requests, shielding your credentials from client-side inspectors.",
+          securityDesc:
+            "Never hardcode your credentials. Use environment variables on backend environments, or set up a secure gateway proxy in Spring Boot or Node.js Express to relay requests, shielding your credentials from client-side inspectors.",
           perfHeading: "2. Image Optimization & Formats",
-          perfDesc: "We support PNG, JPEG, WEBP, and GIF images. For faster page load speeds on frontend apps, compress images using a client-side library (like browser-image-compression) before sending them to Cloudonix.",
+          perfDesc:
+            "We support PNG, JPEG, WEBP, and GIF images. For faster page load speeds on frontend apps, compress images using a client-side library (like browser-image-compression) before sending them to Cloudonix.",
           sizeHeading: "3. Upload Limits",
-          sizeDesc: "The default upload limit per request is 10 MB. For larger assets, consider splitting uploads or compressing images dynamically.",
+          sizeDesc:
+            "The default upload limit per request is 10 MB. For larger assets, consider splitting uploads or compressing images dynamically.",
           apiKeyGuideTitle: "How to Obtain an API Key",
-          apiKeyGuideDesc: "To start using the Cloudonix SDK, you need an API key from the dashboard. Follow these steps to generate and find your key:",
+          apiKeyGuideDesc:
+            "To start using the Cloudonix SDK, you need an API key from the dashboard. Follow these steps to generate and find your key:",
           apiKeyStep1: "Visit the Cloudonix Dashboard",
-          apiKeyStep1Desc: "Go to the Cloudonix Vault website (https://cloudonix.shivam-75.workers.dev/dashboard) and log in or register a new developer account.",
+          apiKeyStep1Desc:
+            "Go to the Cloudonix Vault website (https://cloudonix.shivam-75.workers.dev/dashboard) and log in or register a new developer account.",
           apiKeyStep2: "Copy your API Key",
-          apiKeyStep2Desc: "Once logged in, go to the API section or profile panel. Copy the unique API Key generated for your account (starts with `cx_`). Keep it confidential.",
+          apiKeyStep2Desc:
+            "Once logged in, go to the API section or profile panel. Copy the unique API Key generated for your account (starts with `cx_`). Keep it confidential.",
           apiKeyVisualGuide: "Visual Dashboard Guide",
           uploadedImageLocationTitle: "Uploaded Media Vault",
-          uploadedImageLocationDesc: "All images, videos, and PDFs uploaded via the SDK/API appear in your Cloudonix Vault gallery, separated by media type. Click on any screenshot to view it in full resolution.",
+          uploadedImageLocationDesc:
+            "All images, videos, and PDFs uploaded via the SDK/API appear in your Cloudonix Vault gallery, separated by media type. Click on any screenshot to view it in full resolution.",
           mediaTabImages: "Images Gallery",
           mediaTabVideos: "Videos Gallery",
           mediaTabPdfs: "PDFs Gallery",
           manualUploadTitle: "Manual Upload Option",
-          manualUploadDesc: "If you want to upload files without writing code, you can upload them manually using the drag & drop interface in your Cloudonix Vault dashboard:",
+          manualUploadDesc:
+            "If you want to upload files without writing code, you can upload them manually using the drag & drop interface in your Cloudonix Vault dashboard:",
           dashboardAnalyticsTitle: "Usage Analytics & Dashboard",
-          dashboardAnalyticsDesc: "The Cloudonix Vault dashboard provides a comprehensive real-time view of your media storage. You can easily track the total number of images, videos, and PDFs uploaded manually or externally via the API/SDK (External Images, External Videos, External PDFs) directly on the main panel:",
+          dashboardAnalyticsDesc:
+            "The Cloudonix Vault dashboard provides a comprehensive real-time view of your media storage. You can easily track the total number of images, videos, and PDFs uploaded manually or externally via the API/SDK (External Images, External Videos, External PDFs) directly on the main panel:",
           whyChooseTitle: "Why Choose Cloudonix Vault?",
-          whyChooseDesc: "Discover the key advantages of using Cloudonix Vault to host and manage your media assets:",
+          whyChooseDesc:
+            "Discover the key advantages of using Cloudonix Vault to host and manage your media assets:",
           advFreeTitle: "100% Free to Use",
-          advFreeDesc: "Cloudonix Vault is completely free. Store, host, and access your images, videos, and PDFs without any monthly subscriptions, bandwidth limits, or hidden fees.",
+          advFreeDesc:
+            "Cloudonix Vault is completely free. Store, host, and access your images, videos, and PDFs without any monthly subscriptions, bandwidth limits, or hidden fees.",
           advUnifiedTitle: "Unified Media Support",
-          advUnifiedDesc: "Say goodbye to separate storage services. Store and organize images, videos, and PDFs securely in one consolidated cloud vault.",
+          advUnifiedDesc:
+            "Say goodbye to separate storage services. Store and organize images, videos, and PDFs securely in one consolidated cloud vault.",
           advFlexibleTitle: "Flexible Upload Options",
-          advFlexibleDesc: "Choose your preferred workflow. Automate programmatically using our developer SDKs and APIs, or upload manually via drag-and-drop on the dashboard.",
+          advFlexibleDesc:
+            "Choose your preferred workflow. Automate programmatically using our developer SDKs and APIs, or upload manually via drag-and-drop on the dashboard.",
           advAnalyticsTitle: "Smart Usage Tracking",
-          advAnalyticsDesc: "Monitor your assets in real-time. Distinguish between manual uploads and external API uploads at a single glance on the analytics panel.",
+          advAnalyticsDesc:
+            "Monitor your assets in real-time. Distinguish between manual uploads and external API uploads at a single glance on the analytics panel.",
           npmPackageTitle: "NPM Registry Package",
-          npmPackageDesc: "The cloudonix package is published on the official npm registry. You can check package statistics, versions, and bundle sizes directly on npmjs.",
+          npmPackageDesc:
+            "The cloudonix package is published on the official npm registry. You can check package statistics, versions, and bundle sizes directly on npmjs.",
           viewOnNpm: "View on npmjs.com",
           usageVisualGuideTitle: "Visual SDK Integration Guide",
-          usageVisualGuideDesc: "Here is a step-by-step visual demonstration of how to integrate and use the cloudonix SDK in your code:"
+          usageVisualGuideDesc:
+            "Here is a step-by-step visual demonstration of how to integrate and use the cloudonix SDK in your code:",
+          npmPackageLabel: "Package",
         },
         hi: {
           intro: "परिचय",
@@ -255,94 +324,132 @@
           introSubtitle: "दस्तावेज़ीकरण v1.0.0",
           introTitlePrefix: "परिचय: ",
           introTitleSuffix: "Cloudonix अपलोड SDK",
-          introDesc: "Cloudonix अपलोड SDK एक डेवलपर-अनुकूल लाइब्रेरी है जो क्लाउडोनिक्स क्लाउड स्टोरेज सर्वर पर फ़ाइलों, छवियों और मीडिया संपत्तियों को अपलोड करना आसान बनाती है। अपने Node.js, Bun, या फ़्रंटएंड ऐप्स में सुरक्षित और तेज़ मीडिया अपलोड एकीकृत करें।",
+          introDesc:
+            "Cloudonix अपलोड SDK एक डेवलपर-अनुकूल लाइब्रेरी है जो क्लाउडोनिक्स क्लाउड स्टोरेज सर्वर पर फ़ाइलों, छवियों और मीडिया संपत्तियों को अपलोड करना आसान बनाती है। अपने Node.js, Bun, या फ़्रंटएंड ऐप्स में सुरक्षित और तेज़ मीडिया अपलोड एकीकृत करें।",
           feature1Title: "डेवलपर-फ्रेंडली API",
-          feature1Desc: "ES Modules (`import`) और CommonJS (`require`) के डुअल-मोड्यूल सपोर्ट के साथ कुछ ही मिनटों में फ़ाइल अपलोडिंग जोड़ें।",
+          feature1Desc:
+            "ES Modules (`import`) और CommonJS (`require`) के डुअल-मोड्यूल सपोर्ट के साथ कुछ ही मिनटों में फ़ाइल अपलोडिंग जोड़ें।",
           feature2Title: "सुरक्षित अपलोड",
-          feature2Desc: "बिना क्रेडेंशियल एक्सपोज़ किए बकेट में संपत्तियों को सुरक्षित रूप से लिखने के लिए API Key प्रमाणीकरण का उपयोग करता है।",
+          feature2Desc:
+            "बिना क्रेडेंशियल एक्सपोज़ किए बकेट में संपत्तियों को सुरक्षित रूप से लिखने के लिए API Key प्रमाणीकरण का उपयोग करता है।",
           quickPreview: "त्वरित झलक",
-          previewDesc: "क्लाउडोनिक्स क्लाइंट को इनिशियलाइज़ करें और कुछ ही लाइनों के कोड के साथ किसी भी मानक File ऑब्जेक्ट को अपलोड करें:",
+          previewDesc:
+            "क्लाउडोनिक्स क्लाइंट को इनिशियलाइज़ करें और कुछ ही लाइनों के कोड के साथ किसी भी मानक File ऑब्जेक्ट को अपलोड करें:",
           readyToStart: "शुरू करने के लिए तैयार हैं?",
           readyDesc: "क्लाइंट SDK सेट करने के लिए इंस्टॉलेशन गाइड पर जाएं।",
           goToInstallation: "इंस्टॉलेशन पर जाएं",
           installTitle: "इंस्टॉलेशन",
-          installDesc: "अपने एप्लीकेशन में वॉयस और मीडिया अपलोड क्षमताओं को एकीकृत करने के लिए Cloudonix SDK इंस्टॉल करें। हम सभी प्रमुख पैकेज प्रबंधकों का समर्थन करते हैं।",
+          installDesc:
+            "अपने एप्लीकेशन में वॉयस और मीडिया अपलोड क्षमताओं को एकीकृत करने के लिए Cloudonix SDK इंस्टॉल करें। हम सभी प्रमुख पैकेज प्रबंधकों का समर्थन करते हैं।",
           choosePackageManager: "अपना पैकेज प्रबंधक चुनें",
           copied: "कॉपी हो गया",
           copy: "कॉपी करें",
           configuration: "कॉन्फ़िगरेशन",
           step1Title: "पैकेज इम्पोर्ट करें",
-          step1Desc: "क्लाउडोनिक्स क्लाइंट को इनिशियलाइज़ करने के लिए SDK को अपनी फ़ाइल में इम्पोर्ट करें।",
+          step1Desc:
+            "क्लाउडोनिक्स क्लाइंट को इनिशियलाइज़ करने के लिए SDK को अपनी फ़ाइल में इम्पोर्ट करें।",
           step2Title: "क्रेडेंशियल जोड़ें",
-          step2Desc: "Cloudonix API Key कॉन्फ़िगरेशन के साथ अपने कम्युनिकेशन एंडपॉइंट्स को सुरक्षित करें।",
+          step2Desc:
+            "Cloudonix API Key कॉन्फ़िगरेशन के साथ अपने कम्युनिकेशन एंडपॉइंट्स को सुरक्षित करें।",
           securityWarning: "सुरक्षा चेतावनी",
-          securityWarningDesc: "सार्वजनिक रिपॉजिटरी पर क्लाइंट-साइड कोड में अपनी API की (API key) को कभी भी एक्सपोज़ न करें। रहस्यों को सुरक्षित रखने के लिए पर्यावरण वेरिएबल्स (जैसे VITE_CLOUDONIX_API_KEY) का उपयोग करें।",
+          securityWarningDesc:
+            "सार्वजनिक रिपॉजिटरी पर क्लाइंट-साइड कोड में अपनी API की (API key) को कभी भी एक्सपोज़ न करें। रहस्यों को सुरक्षित रखने के लिए पर्यावरण वेरिएबल्स (जैसे VITE_CLOUDONIX_API_KEY) का उपयोग करें।",
           usageTitle: "यूसेज और API गाइड",
-          usageDesc: "Node.js और Bun में Cloudonix SDK का उपयोग करके फ़ाइलों (इमेज, वीडियो और पीडीएफ) को अपलोड करना सीखें, चाहे Async/Await (Try/Catch) के साथ या फिर सामान्य Promise हैंडलर्स के साथ।",
+          usageDesc:
+            "Node.js और Bun में Cloudonix SDK का उपयोग करके फ़ाइलों (इमेज, वीडियो और पीडीएफ) को अपलोड करना सीखें, चाहे Async/Await (Try/Catch) के साथ या फिर सामान्य Promise हैंडलर्स के साथ।",
           apiReference: "SDK API संदर्भ",
           apiInitDesc: "एक नया क्लाउडोनिक्स अपलोडर क्लाइंट शुरू करता है।",
-          apiKeyReq: "api_key (String, आवश्यक): आपकी क्लाउडोनिक्स प्रमाणीकरण कुंजी।",
-          apiUploadDesc: "मल्टीपार्ट फॉर्म अपलोड के ज़रिए फ़ाइल ऑब्जेक्ट अपलोड करता है।",
-          apiFileReq: "file (File / Blob, आवश्यक): ब्राउज़र/Node-संगत File ऑब्जेक्ट।",
-          apiReturns: "सफलता की स्थिति ({ success: boolean, data?: any, error?: string }) लौटाता है।",
+          apiKeyReq:
+            "api_key (String, आवश्यक): आपकी क्लाउडोनिक्स प्रमाणीकरण कुंजी।",
+          apiUploadDesc:
+            "मल्टीपार्ट फॉर्म अपलोड के ज़रिए फ़ाइल ऑब्जेक्ट अपलोड करता है।",
+          apiFileReq:
+            "file (File / Blob, आवश्यक): ब्राउज़र/Node-संगत File ऑब्जेक्ट।",
+          apiReturns:
+            "सफलता की स्थिति ({ success: boolean, data?: any, error?: string }) लौटाता है।",
           codeImplementations: "विभिन्न भाषाओं में कोड उदाहरण",
           copyCode: "कोड कॉपी करें",
           errorsTitle: "रिस्पांस और एरर कोड",
-          errorsDesc: "सक्सेस पेलोड की संरचना और क्लाउडोनिक्स अपलोड सर्वर द्वारा लौटाए गए एरर स्टेटस कोड को समझें।",
+          errorsDesc:
+            "सक्सेस पेलोड की संरचना और क्लाउडोनिक्स अपलोड सर्वर द्वारा लौटाए गए एरर स्टेटस कोड को समझें।",
           successResponse: "सक्सेस रिस्पांस स्ट्रक्चर (Success Structure)",
           errorResponse: "एरर रिस्पांस स्ट्रक्चर (Error Structure)",
-          responseDesc: "जब अपलोड सफल होता है, तो सर्वर निम्नलिखित JSON संरचना के साथ 200 HTTP स्टेटस कोड लौटाता है:",
-          errDesc: "जब कोई अनुरोध अमान्य होता है, पैरामीटर गायब होते हैं, या टोकन समाप्त हो जाता है, तो सर्वर एरर पेलोड के साथ संबंधित HTTP स्टेटस कोड लौटाता है:",
+          responseDesc:
+            "जब अपलोड सफल होता है, तो सर्वर निम्नलिखित JSON संरचना के साथ 200 HTTP स्टेटस कोड लौटाता है:",
+          errDesc:
+            "जब कोई अनुरोध अमान्य होता है, पैरामीटर गायब होते हैं, या टोकन समाप्त हो जाता है, तो सर्वर एरर पेलोड के साथ संबंधित HTTP स्टेटस कोड लौटाता है:",
           commonErrorCodes: "सामान्य एरर स्टेटस कोड",
           errorColCode: "स्टेटस कोड",
           errorColDesc: "विवरण / अर्थ",
           errorColAction: "समाधान कैसे करें",
           err400Desc: "फ़ाइल गायब है या अमान्य रिक्वेस्ट पेलोड",
-          err400Action: "सुनिश्चित करें कि form-data की 'avatar' की (key) है और फ़ाइल सही है।",
+          err400Action:
+            "सुनिश्चित करें कि form-data की 'avatar' की (key) है और फ़ाइल सही है।",
           err401Desc: "अनधिकृत / अमान्य API कुंजी (API Key)",
           err413Desc: "फ़ाइल का आकार सर्वर सीमा से अधिक है (अधिकतम 10MB)",
-          err401Action: "कॉन्फ़िगरेशन में CLOUDONIX-API-KEY हेडर वैल्यू की जांच करें।",
-          err413Action: "फ़ाइल का आकार छोटा करने के लिए अपलोड करने से पहले इमेज को कंप्रेस करें।",
+          err401Action:
+            "कॉन्फ़िगरेशन में CLOUDONIX-API-KEY हेडर वैल्यू की जांच करें।",
+          err413Action:
+            "फ़ाइल का आकार छोटा करने के लिए अपलोड करने से पहले इमेज को कंप्रेस करें।",
           bpTitle: "बेस्ट प्रैक्टिसेस",
-          bpDesc: "सशक्त और कुशल मीडिया एकीकरण के लिए सुरक्षा, कॉन्फ़िगरेशन और संरचनात्मक सलाह।",
+          bpDesc:
+            "सशक्त और कुशल मीडिया एकीकरण के लिए सुरक्षा, कॉन्फ़िगरेशन और संरचनात्मक सलाह।",
           securityHeading: "1. सुरक्षित API Key प्रबंधन",
-          securityDesc: "अपनी क्रेडेंशियल्स को कभी भी हार्डकोड न करें। बैकएंड वातावरण पर पर्यावरण वेरिएबल्स (Environment Variables) का उपयोग करें, या अनुरोधों को प्रसारित करने के लिए Spring Boot या Express में एक सुरक्षित गेटवे प्रॉक्सी स्थापित करें, जिससे क्रेडेंशियल्स सुरक्षित रहें।",
+          securityDesc:
+            "अपनी क्रेडेंशियल्स को कभी भी हार्डकोड न करें। बैकएंड वातावरण पर पर्यावरण वेरिएबल्स (Environment Variables) का उपयोग करें, या अनुरोधों को प्रसारित करने के लिए Spring Boot या Express में एक सुरक्षित गेटवे प्रॉक्सी स्थापित करें, जिससे क्रेडेंशियल्स सुरक्षित रहें।",
           perfHeading: "2. इमेज ऑप्टिमाइज़ेशन और फॉर्मेट्स",
-          perfDesc: "हम PNG, JPEG, WEBP, और GIF छवियों का समर्थन करते हैं। फ़्रंटएंड ऐप्स पर तेज़ पेज लोडिंग के लिए, छवियों को क्लाउडोनिक्स पर भेजने से पहले कंप्रेस करें।",
+          perfDesc:
+            "हम PNG, JPEG, WEBP, और GIF छवियों का समर्थन करते हैं। फ़्रंटएंड ऐप्स पर तेज़ पेज लोडिंग के लिए, छवियों को क्लाउडोनिक्स पर भेजने से पहले कंप्रेस करें।",
           sizeHeading: "3. अपलोड सीमा",
-          sizeDesc: "प्रति अनुरोध डिफ़ॉल्ट अपलोड सीमा 10 MB है। इससे बड़ी फ़ाइलों के लिए, अपलोड को विभाजित करने या इमेज को डायनामिक रूप से कंप्रेस करने पर विचार करें।",
+          sizeDesc:
+            "प्रति अनुरोध डिफ़ॉल्ट अपलोड सीमा 10 MB है। इससे बड़ी फ़ाइलों के लिए, अपलोड को विभाजित करने या इमेज को डायनामिक रूप से कंप्रेस करने पर विचार करें।",
           apiKeyGuideTitle: "API की (API Key) कैसे प्राप्त करें",
-          apiKeyGuideDesc: "Cloudonix SDK का उपयोग शुरू करने के लिए, आपको डैशबोर्ड से एक API की की आवश्यकता होगी। अपनी की जनरेट करने और खोजने के लिए इन चरणों का पालन करें:",
+          apiKeyGuideDesc:
+            "Cloudonix SDK का उपयोग शुरू करने के लिए, आपको डैशबोर्ड से एक API की की आवश्यकता होगी। अपनी की जनरेट करने और खोजने के लिए इन चरणों का पालन करें:",
           apiKeyStep1: "क्लाउडोनिक्स डैशबोर्ड पर जाएं",
-          apiKeyStep1Desc: "Go to the Cloudonix Vault website (https://cloudonix.shivam-75.workers.dev/dashboard) and log in or register a new developer account.",
+          apiKeyStep1Desc:
+            "Go to the Cloudonix Vault website (https://cloudonix.shivam-75.workers.dev/dashboard) and log in or register a new developer account.",
           apiKeyStep2: "अपनी API की कॉपी करें",
-          apiKeyStep2Desc: "Once logged in, go to the API section or profile panel. Copy the unique API Key generated for your account (starts with `cx_`). Keep it confidential.",
+          apiKeyStep2Desc:
+            "Once logged in, go to the API section or profile panel. Copy the unique API Key generated for your account (starts with `cx_`). Keep it confidential.",
           apiKeyVisualGuide: "डैशबोर्ड विजुअल गाइड",
           uploadedImageLocationTitle: "अपलोड की गई मीडिया तिजोरी (Vault)",
-          uploadedImageLocationDesc: "SDK/API के माध्यम से अपलोड की गई सभी छवियां, वीडियो और पीडीएफ आपके Cloudonix Vault गैलरी में मीडिया प्रकार के आधार पर दिखाई देंगे। फुल रिज़ॉल्यूशन में देखने के लिए किसी भी स्क्रीनशॉट पर क्लिक करें।",
+          uploadedImageLocationDesc:
+            "SDK/API के माध्यम से अपलोड की गई सभी छवियां, वीडियो और पीडीएफ आपके Cloudonix Vault गैलरी में मीडिया प्रकार के आधार पर दिखाई देंगे। फुल रिज़ॉल्यूशन में देखने के लिए किसी भी स्क्रीनशॉट पर क्लिक करें।",
           mediaTabImages: "इमेज गैलरी",
           mediaTabVideos: "वीडियो गैलरी",
           mediaTabPdfs: "पीडीएफ गैलरी",
           manualUploadTitle: "मैनुअल अपलोड विकल्प (Manual Upload)",
-          manualUploadDesc: "यदि आप बिना कोड लिखे फ़ाइलें अपलोड करना चाहते हैं, तो आप अपने Cloudonix Vault डैशबोर्ड में ड्रैग एंड ड्रॉप इंटरफ़ेस का उपयोग करके उन्हें मैन्युअल रूप से अपलोड कर सकते हैं:",
-          dashboardAnalyticsTitle: "उपयोग विश्लेषिकी और डैशबोर्ड (Dashboard Analytics)",
-          dashboardAnalyticsDesc: "Cloudonix Vault डैशबोर्ड आपके मीडिया स्टोरेज का एक व्यापक और रियल-टाइम विश्लेषण प्रदान करता है। आप मुख्य पैनल पर सीधे मैन्युअल रूप से या API/SDK के माध्यम से बाहरी रूप से अपलोड की गई छवियों, वीडियो और पीडीएफ (बाहरी छवियां, बाहरी वीडियो, बाहरी पीडीएफ) की कुल संख्या को आसानी से ट्रैक कर सकते हैं:",
+          manualUploadDesc:
+            "यदि आप बिना कोड लिखे फ़ाइलें अपलोड करना चाहते हैं, तो आप अपने Cloudonix Vault डैशबोर्ड में ड्रैग एंड ड्रॉप इंटरफ़ेस का उपयोग करके उन्हें मैन्युअल रूप से अपलोड कर सकते हैं:",
+          dashboardAnalyticsTitle:
+            "उपयोग विश्लेषिकी और डैशबोर्ड (Dashboard Analytics)",
+          dashboardAnalyticsDesc:
+            "Cloudonix Vault डैशबोर्ड आपके मीडिया स्टोरेज का एक व्यापक और रियल-टाइम विश्लेषण प्रदान करता है। आप मुख्य पैनल पर सीधे मैन्युअल रूप से या API/SDK के माध्यम से बाहरी रूप से अपलोड की गई छवियों, वीडियो और पीडीएफ (बाहरी छवियां, बाहरी वीडियो, बाहरी पीडीएफ) की कुल संख्या को आसानी से ट्रैक कर सकते हैं:",
           whyChooseTitle: "Cloudonix Vault क्यों चुनें?",
-          whyChooseDesc: "अपनी मीडिया संपत्तियों को होस्ट और प्रबंधित करने के लिए Cloudonix Vault का उपयोग करने के मुख्य लाभों को जानें:",
+          whyChooseDesc:
+            "अपनी मीडिया संपत्तियों को होस्ट और प्रबंधित करने के लिए Cloudonix Vault का उपयोग करने के मुख्य लाभों को जानें:",
           advFreeTitle: "उपयोग करने के लिए 100% मुफ़्त (100% Free)",
-          advFreeDesc: "Cloudonix Vault पूरी तरह से मुफ़्त है। बिना किसी मासिक सदस्यता, बैंडविड्थ सीमा या छिपे हुए शुल्क के अपनी छवियों, वीडियो और पीडीएफ को स्टोर, होस्ट और एक्सेस करें।",
+          advFreeDesc:
+            "Cloudonix Vault पूरी तरह से मुफ़्त है। बिना किसी मासिक सदस्यता, बैंडविड्थ सीमा या छिपे हुए शुल्क के अपनी छवियों, वीडियो और पीडीएफ को स्टोर, होस्ट और एक्सेस करें।",
           advUnifiedTitle: "एकीकृत मीडिया सपोर्ट",
-          advUnifiedDesc: "अलग-अलग स्टोरेज सेवाओं को अलविदा कहें। एक एकीकृत क्लाउड वॉल्ट में छवियों, वीडियो और पीडीएफ को सुरक्षित रूप से स्टोर और व्यवस्थित करें।",
+          advUnifiedDesc:
+            "अलग-अलग स्टोरेज सेवाओं को अलविदा कहें। एक एकीकृत क्लाउड वॉल्ट में छवियों, वीडियो और पीडीएफ को सुरक्षित रूप से स्टोर और व्यवस्थित करें।",
           advFlexibleTitle: "लचीले अपलोड विकल्प",
-          advFlexibleDesc: "अपना पसंदीदा वर्कफ़्लो चुनें। हमारे डेवलपर SDKs और APIs का उपयोग करके प्रोग्रामेटिक रूप से अपलोड को ऑटोमेट करें, या डैशबोर्ड पर ड्रैग एंड ड्रॉप के ज़रिए मैन्युअल रूप से अपलोड करें।",
+          advFlexibleDesc:
+            "अपना पसंदीदा वर्कफ़्लो चुनें। हमारे डेवलपर SDKs और APIs का उपयोग करके प्रोग्रामेटिक रूप से अपलोड को ऑटोमेट करें, या डैशबोर्ड पर ड्रैग एंड ड्रॉप के ज़रिए मैन्युअल रूप से अपलोड करें।",
           advAnalyticsTitle: "स्मार्ट उपयोग ट्रैकिंग",
-          advAnalyticsDesc: "वास्तविक समय में अपनी संपत्तियों की निगरानी करें। एनालिटिक्स पैनल पर एक ही नज़र में मैन्युअल अपलोड और बाहरी API अपलोड के बीच अंतर ट्रैक करें।",
+          advAnalyticsDesc:
+            "वास्तविक समय में अपनी संपत्तियों की निगरानी करें। एनालिटिक्स पैनल पर एक ही नज़र में मैन्युअल अपलोड और बाहरी API अपलोड के बीच अंतर ट्रैक करें।",
           npmPackageTitle: "NPM रजिस्ट्री पैकेज",
-          npmPackageDesc: "cloudonix पैकेज आधिकारिक npm रजिस्ट्री पर प्रकाशित है। आप सीधे npmjs पर पैकेज के आंकड़े, संस्करण और बंडल साइज देख सकते हैं।",
+          npmPackageDesc:
+            "cloudonix पैकेज आधिकारिक npm रजिस्ट्री पर प्रकाशित है। आप सीधे npmjs पर पैकेज के आंकड़े, संस्करण और बंडल साइज देख सकते हैं।",
           viewOnNpm: "npmjs.com पर देखें",
           usageVisualGuideTitle: "विजुअल SDK इंटीग्रेशन गाइड",
-          usageVisualGuideDesc: "यहाँ आपके कोड में cloudonix SDK को एकीकृत और उपयोग करने का चरण-दर-चरण विजुअल प्रदर्शन दिया गया है:"
-        }
+          usageVisualGuideDesc:
+            "यहाँ आपके कोड में cloudonix SDK को एकीकृत और उपयोग करने का चरण-दर-चरण विजुअल प्रदर्शन दिया गया है:",
+          npmPackageLabel: "पैकेज",
+        },
       };
 
       // 2. Navigation items definition
@@ -351,7 +458,7 @@
         { id: "installation", path: "#installation", icon: "terminal" },
         { id: "usage", path: "#usage", icon: "code" },
         { id: "errors", path: "#errors", icon: "shield-alert" },
-        { id: "bestPractices", path: "#best-practices", icon: "settings" }
+        { id: "bestPractices", path: "#best-practices", icon: "settings" },
       ];
 
       // Code Snippets Data
@@ -369,9 +476,9 @@ if (response.success) {
 }`;
 
       const installCommands = {
-        npm: 'npm install cloudonix',
-        yarn: 'yarn add cloudonix',
-        pnpm: 'pnpm add cloudonix'
+        npm: "npm install cloudonix",
+        yarn: "yarn add cloudonix",
+        pnpm: "pnpm add cloudonix",
       };
 
       const usageSnippets = {
@@ -518,7 +625,7 @@ const file = new File(
 );
 
 const response = await uploader.upload(file);
-console.log(response);`
+console.log(response);`,
       };
 
       const successJSON = `{
@@ -547,7 +654,7 @@ console.log(response);`
         mobileMenuOpen: false,
         activeInstallTab: "npm",
         activeUsageLang: "esm",
-        activeVaultTab: "images"
+        activeVaultTab: "images",
       };
 
       // 4. Utility Functions
@@ -559,11 +666,21 @@ console.log(response);`
         const t = getT();
         let pageTitle = "";
         switch (state.currentPage) {
-          case "intro": pageTitle = t.intro; break;
-          case "installation": pageTitle = t.installTitle; break;
-          case "usage": pageTitle = t.usage; break;
-          case "errors": pageTitle = t.errors; break;
-          case "bestPractices": pageTitle = t.bestPractices; break;
+          case "intro":
+            pageTitle = t.intro;
+            break;
+          case "installation":
+            pageTitle = t.installTitle;
+            break;
+          case "usage":
+            pageTitle = t.usage;
+            break;
+          case "errors":
+            pageTitle = t.errors;
+            break;
+          case "bestPractices":
+            pageTitle = t.bestPractices;
+            break;
         }
         document.title = `${pageTitle} - Cloudonix Doc`;
       }
@@ -597,13 +714,18 @@ console.log(response);`
 
       function applyLanguage() {
         // Update switcher button label
-        document.getElementById("lang-btn-text").textContent = state.lang.toUpperCase();
-        
+        document.getElementById("lang-btn-text").textContent =
+          state.lang.toUpperCase();
+
         // Update generic navbar text
         const t = getT();
         document.getElementById("nav-apikey-text").textContent = t.githubRepo;
+        const navPackageText = document.getElementById("nav-package-text");
+        if (navPackageText) {
+          navPackageText.textContent = t.npmPackageLabel;
+        }
         document.getElementById("version-badge").textContent = t.stable;
-        
+
         // Re-render navigation & current page content
         renderNavigations();
         renderActivePage();
@@ -628,15 +750,17 @@ console.log(response);`
         state.currentPage = pageId;
         state.mobileMenuOpen = false;
         document.getElementById("mobile-dropdown").classList.add("hidden");
-        document.getElementById("mobile-menu-icon").setAttribute("data-lucide", "menu");
-        
+        document
+          .getElementById("mobile-menu-icon")
+          .setAttribute("data-lucide", "menu");
+
         // Update hash in address bar silently without reloading
         window.location.hash = pageId === "intro" ? "#intro" : `#${pageId}`;
-        
+
         renderNavigations();
         renderActivePage();
         updateDocumentTitle();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
       // Render functions for Navigation links
@@ -646,9 +770,10 @@ console.log(response);`
         const mobileDropdown = document.getElementById("mobile-dropdown");
 
         // 1. Desktop Nav
-        desktopNav.innerHTML = navItems.map(item => {
-          const isActive = state.currentPage === item.id;
-          return `
+        desktopNav.innerHTML = navItems
+          .map((item) => {
+            const isActive = state.currentPage === item.id;
+            return `
             <a href="${item.path}" onclick="event.preventDefault(); setPage('${item.id}')"
               class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
                 isActive
@@ -658,12 +783,15 @@ console.log(response);`
               ${t[item.id] || item.id}
             </a>
           `;
-        }).join("");
+          })
+          .join("");
 
         // 2. Mobile Dropdown
-        mobileDropdown.innerHTML = navItems.map(item => {
-          const isActive = state.currentPage === item.id;
-          return `
+        mobileDropdown.innerHTML =
+          navItems
+            .map((item) => {
+              const isActive = state.currentPage === item.id;
+              return `
             <a href="${item.path}" onclick="event.preventDefault(); setPage('${item.id}')"
               class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                 isActive
@@ -674,8 +802,15 @@ console.log(response);`
               <span>${t[item.id] || item.id}</span>
             </a>
           `;
-        }).join("") + `
+            })
+            .join("") +
+          `
           <hr class="my-2 border-slate-200 dark:border-slate-800" />
+          <a href="https://www.npmjs.com/package/cloudonix" target="_blank" rel="noopener noreferrer"
+            class="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-all">
+            <span>${t.npmPackageLabel}</span>
+            <i data-lucide="box" class="w-4 h-4"></i>
+          </a>
           <a href="https://cloudonix.shivam-75.workers.dev/dashboard" target="_blank" rel="noopener noreferrer"
             class="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-all">
             <span>${t.githubRepo}</span>
@@ -725,7 +860,10 @@ console.log(response);`
       // Helper to generate a CodeBlock component equivalent in HTML
       function renderCodeBlockHtml(codeText, language, btnUniqueId) {
         const t = getT();
-        const escapedCode = codeText.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const escapedCode = codeText
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
         return `
           <div class="relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950 shadow-md">
             <div class="flex items-center justify-between px-4 py-2.5 border-b border-slate-900 bg-slate-950/80 text-xs text-slate-500">
@@ -734,7 +872,7 @@ console.log(response);`
                 <span class="font-semibold uppercase tracking-wider text-slate-400">${language}</span>
               </div>
               <button id="${btnUniqueId}"
-                onclick="copyTextToClipboard('${btnUniqueId}', \`${codeText.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)"
+                onclick="copyTextToClipboard('${btnUniqueId}', \`${codeText.replace(/`/g, "\\`").replace(/\$/g, "\\$")}\`)"
                 class="flex items-center gap-1 px-2.5 py-1 rounded-lg border border-slate-800 bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-all active:scale-95 cursor-pointer"
               >
                 <i data-lucide="copy" class="w-3.5 h-3.5"></i>
@@ -750,16 +888,16 @@ console.log(response);`
 
       // Helper to generate a Callout component equivalent in HTML
       function renderCalloutHtml(type, title, message) {
-        const isWarning = type === 'warning';
+        const isWarning = type === "warning";
         return `
           <div class="p-4 rounded-xl border flex gap-3 text-slate-700 dark:text-slate-300 ${
-            isWarning 
-              ? 'border-amber-500/20 bg-amber-500/5' 
-              : 'border-cyan-500/20 bg-cyan-500/5'
+            isWarning
+              ? "border-amber-500/20 bg-amber-500/5"
+              : "border-cyan-500/20 bg-cyan-500/5"
           }">
-            <i data-lucide="${isWarning ? 'alert-circle' : 'info'}" class="w-5 h-5 ${isWarning ? 'text-amber-500' : 'text-cyan-500'} shrink-0 mt-0.5"></i>
+            <i data-lucide="${isWarning ? "alert-circle" : "info"}" class="w-5 h-5 ${isWarning ? "text-amber-500" : "text-cyan-500"} shrink-0 mt-0.5"></i>
             <div class="text-sm space-y-1 text-left">
-              <span class="font-semibold ${isWarning ? 'text-amber-600 dark:text-amber-400' : 'text-cyan-600 dark:text-cyan-400'}">
+              <span class="font-semibold ${isWarning ? "text-amber-600 dark:text-amber-400" : "text-cyan-600 dark:text-cyan-400"}">
                 ${title}
               </span>
               <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -774,7 +912,7 @@ console.log(response);`
       function renderActivePage() {
         const t = getT();
         const content = document.getElementById("content-area");
-        
+
         // Add subtle reflow trigger
         content.classList.remove("animate-fade-in");
         void content.offsetWidth; // trigger reflow
@@ -954,19 +1092,21 @@ console.log(response);`
                   <div class="border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 rounded-xl overflow-hidden shadow-sm">
                     <!-- Tab Headers -->
                     <div class="flex border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950/40 px-4">
-                      ${['npm', 'yarn', 'pnpm'].map(tab => {
-                        const isTabActive = state.activeInstallTab === tab;
-                        return `
+                      ${["npm", "yarn", "pnpm"]
+                        .map((tab) => {
+                          const isTabActive = state.activeInstallTab === tab;
+                          return `
                           <button onclick="setInstallTab('${tab}')"
                             class="px-4 py-3 text-sm font-medium border-b-2 transition-all -mb-px cursor-pointer ${
                               isTabActive
-                                ? 'border-cyan-500 text-cyan-600 dark:text-cyan-400 font-bold'
-                                : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                                ? "border-cyan-500 text-cyan-600 dark:text-cyan-400 font-bold"
+                                : "border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
                             }">
                             ${tab.toUpperCase()}
                           </button>
                         `;
-                      }).join("")}
+                        })
+                        .join("")}
                     </div>
 
                     <!-- Code block -->
@@ -1058,21 +1198,35 @@ console.log(response);`
                 </div>
 
                 <!-- Warning Callout -->
-                ${renderCalloutHtml('warning', t.securityWarning, t.securityWarningDesc)}
+                ${renderCalloutHtml("warning", t.securityWarning, t.securityWarningDesc)}
               </div>
             `;
             break;
 
           case "usage":
             const usageLanguages = [
-              { id: 'esm', label: 'ESM (Async/Await)', type: 'javascript' },
-              { id: 'esm_promise', label: 'ESM (Promises)', type: 'javascript' },
-              { id: 'cjs', label: 'CommonJS (Async/Await)', type: 'javascript' },
-              { id: 'cjs_promise', label: 'CommonJS (Promises)', type: 'javascript' },
-              { id: 'express', label: 'Node + Express', type: 'javascript' },
-              { id: 'bun', label: 'Bun', type: 'javascript' },
+              { id: "esm", label: "ESM (Async/Await)", type: "javascript" },
+              {
+                id: "esm_promise",
+                label: "ESM (Promises)",
+                type: "javascript",
+              },
+              {
+                id: "cjs",
+                label: "CommonJS (Async/Await)",
+                type: "javascript",
+              },
+              {
+                id: "cjs_promise",
+                label: "CommonJS (Promises)",
+                type: "javascript",
+              },
+              { id: "express", label: "Node + Express", type: "javascript" },
+              { id: "bun", label: "Bun", type: "javascript" },
             ];
-            const activeLangObj = usageLanguages.find(l => l.id === state.activeUsageLang);
+            const activeLangObj = usageLanguages.find(
+              (l) => l.id === state.activeUsageLang,
+            );
             const activeCode = usageSnippets[state.activeUsageLang];
 
             html = `
@@ -1128,19 +1282,22 @@ console.log(response);`
                   <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.codeImplementations}</h2>
                     <div class="flex flex-wrap gap-2">
-                      ${usageLanguages.map(lang => {
-                        const isLangActive = state.activeUsageLang === lang.id;
-                        return `
+                      ${usageLanguages
+                        .map((lang) => {
+                          const isLangActive =
+                            state.activeUsageLang === lang.id;
+                          return `
                           <button onclick="setUsageLang('${lang.id}')"
                             class="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
                               isLangActive
-                                ? 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20 dark:text-cyan-400 dark:border-cyan-500/20 font-semibold'
-                                : 'bg-white dark:bg-slate-950 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 border-slate-200 dark:border-slate-800'
+                                ? "bg-cyan-500/10 text-cyan-600 border-cyan-500/20 dark:text-cyan-400 dark:border-cyan-500/20 font-semibold"
+                                : "bg-white dark:bg-slate-950 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 border-slate-200 dark:border-slate-800"
                             }">
                             ${lang.label}
                           </button>
                         `;
-                      }).join("")}
+                        })
+                        .join("")}
                     </div>
                   </div>
 
@@ -1197,27 +1354,27 @@ console.log(response);`
                   <div class="flex gap-2 p-1 bg-slate-100 dark:bg-slate-900 rounded-xl w-fit border border-slate-200 dark:border-slate-800/60">
                     <button onclick="setVaultTab('images')"
                       class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-                        state.activeVaultTab === 'images'
-                          ? 'bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm font-bold'
-                          : 'text-slate-500 hover:text-slate-850 dark:hover:text-slate-355'
+                        state.activeVaultTab === "images"
+                          ? "bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm font-bold"
+                          : "text-slate-500 hover:text-slate-850 dark:hover:text-slate-355"
                       }">
                       <i data-lucide="image" class="w-3.5 h-3.5"></i>
                       <span>${t.mediaTabImages}</span>
                     </button>
                     <button onclick="setVaultTab('videos')"
                       class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-                        state.activeVaultTab === 'videos'
-                          ? 'bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm font-bold'
-                          : 'text-slate-500 hover:text-slate-850 dark:hover:text-slate-355'
+                        state.activeVaultTab === "videos"
+                          ? "bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm font-bold"
+                          : "text-slate-500 hover:text-slate-850 dark:hover:text-slate-355"
                       }">
                       <i data-lucide="video" class="w-3.5 h-3.5"></i>
                       <span>${t.mediaTabVideos}</span>
                     </button>
                     <button onclick="setVaultTab('pdfs')"
                       class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-                        state.activeVaultTab === 'pdfs'
-                          ? 'bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm font-bold'
-                          : 'text-slate-500 hover:text-slate-850 dark:hover:text-slate-355'
+                        state.activeVaultTab === "pdfs"
+                          ? "bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm font-bold"
+                          : "text-slate-500 hover:text-slate-850 dark:hover:text-slate-355"
                       }">
                       <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
                       <span>${t.mediaTabPdfs}</span>
@@ -1225,7 +1382,9 @@ console.log(response);`
                   </div>
 
                   <!-- Vault tab viewer -->
-                  ${state.activeVaultTab === 'images' ? `
+                  ${
+                    state.activeVaultTab === "images"
+                      ? `
                     <a href="https://cloudonix-tb41.onrender.com/image/1780420196049-595999850-Screenshot_2026_06_02_223933.png"
                       target="_blank" rel="noopener noreferrer"
                       class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
@@ -1233,8 +1392,12 @@ console.log(response);`
                         alt="Cloudonix Vault Uploaded Images Gallery" 
                         class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]" />
                     </a>
-                  ` : ""}
-                  ${state.activeVaultTab === 'videos' ? `
+                  `
+                      : ""
+                  }
+                  ${
+                    state.activeVaultTab === "videos"
+                      ? `
                     <a href="https://cloudonix-tb41.onrender.com/image/1780420358431-246608771-Screenshot_2026_06_02_224210.png"
                       target="_blank" rel="noopener noreferrer"
                       class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
@@ -1242,8 +1405,12 @@ console.log(response);`
                         alt="Cloudonix Vault Uploaded Videos Gallery" 
                         class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]" />
                     </a>
-                  ` : ""}
-                  ${state.activeVaultTab === 'pdfs' ? `
+                  `
+                      : ""
+                  }
+                  ${
+                    state.activeVaultTab === "pdfs"
+                      ? `
                     <a href="https://cloudonix-tb41.onrender.com/image/1780420746369-290875787-Screenshot_2026_06_02_224858.png"
                       target="_blank" rel="noopener noreferrer"
                       class="block relative group border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-zoom-in">
@@ -1251,7 +1418,9 @@ console.log(response);`
                         alt="Cloudonix Vault Uploaded PDFs Gallery" 
                         class="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]" />
                     </a>
-                  ` : ""}
+                  `
+                      : ""
+                  }
                 </div>
 
                 <!-- Error Table -->
@@ -1352,8 +1521,14 @@ console.log(response);`
 
         // Router based on Hash
         const hash = window.location.hash.replace("#", "");
-        const validPages = ["intro", "installation", "usage", "errors", "bestPractices"];
-        
+        const validPages = [
+          "intro",
+          "installation",
+          "usage",
+          "errors",
+          "bestPractices",
+        ];
+
         let initialPage = "intro";
         // map dash-separated hash back to camelCase pageIds
         if (hash === "best-practices") {
@@ -1370,7 +1545,17 @@ console.log(response);`
       window.addEventListener("hashchange", () => {
         const hash = window.location.hash.replace("#", "");
         const matched = hash === "best-practices" ? "bestPractices" : hash;
-        if (matched && matched !== state.currentPage && ["intro", "installation", "usage", "errors", "bestPractices"].includes(matched)) {
+        if (
+          matched &&
+          matched !== state.currentPage &&
+          [
+            "intro",
+            "installation",
+            "usage",
+            "errors",
+            "bestPractices",
+          ].includes(matched)
+        ) {
           setPage(matched);
         }
       });
