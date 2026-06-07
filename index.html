@@ -219,7 +219,25 @@
             "Never expose your API key in client-side code on public repositories. Use environment variables (e.g. VITE_CLOUDONIX_API_KEY) to keep secrets secure.",
           usageTitle: "Usage & API Guide",
           usageDesc:
-            "Learn how to upload files (images, videos, and PDFs) using the Cloudonix SDK in Node.js and Bun, using either Async/Await (Try/Catch) or standard Promise handlers.",
+            "Learn how to upload files (images, videos, and PDFs) using the Cloudonix SDK in Node.js, Bun, and Express.js (with Multer), using either Async/Await (Try/Catch) or standard Promise handlers.",
+          expressHeading: "Express.js Integration (with Multer)",
+          expressDesc:
+            "Here is a complete setup to handle file uploads in an Express.js backend using Multer (disk storage) and upload them to Cloudonix Vault:",
+          esmHeading: "ES Modules (ESM) - Async/Await",
+          esmDesc:
+            "Use this modern style if your project supports ES Modules (import/export).",
+          esmPromiseHeading: "ES Modules (ESM) - Promise Chain",
+          esmPromiseDesc:
+            "Use standard Promise .then() and .catch() handler chains in ES Modules environment.",
+          cjsHeading: "CommonJS (CJS) - Async/Await",
+          cjsDesc:
+            "Use this style if you are using legacy Node.js CommonJS (require) with async/await.",
+          cjsPromiseHeading: "CommonJS (CJS) - Promise Chain",
+          cjsPromiseDesc:
+            "Use Promise handler chains in legacy Node.js CommonJS environments.",
+          bunHeading: "Bun Integration",
+          bunDesc:
+            "If you are running in a Bun runtime environment, you can use native Bun.file API to upload files:",
           apiReference: "SDK API Reference",
           apiInitDesc: "Initializes a new Cloudonix uploader client.",
           apiKeyReq:
@@ -356,7 +374,25 @@
             "सार्वजनिक रिपॉजिटरी पर क्लाइंट-साइड कोड में अपनी API की (API key) को कभी भी एक्सपोज़ न करें। रहस्यों को सुरक्षित रखने के लिए पर्यावरण वेरिएबल्स (जैसे VITE_CLOUDONIX_API_KEY) का उपयोग करें।",
           usageTitle: "यूसेज और API गाइड",
           usageDesc:
-            "Node.js और Bun में Cloudonix SDK का उपयोग करके फ़ाइलों (इमेज, वीडियो और पीडीएफ) को अपलोड करना सीखें, चाहे Async/Await (Try/Catch) के साथ या फिर सामान्य Promise हैंडलर्स के साथ।",
+            "Node.js, Bun, और Express.js (Multer के साथ) में Cloudonix SDK का उपयोग करके फ़ाइलों (इमेज, वीडियो और पीडीएफ) को अपलोड करना सीखें, चाहे Async/Await (Try/Catch) के साथ या फिर सामान्य Promise हैंडलर्स के साथ।",
+          expressHeading: "Express.js इंटीग्रेशन (Multer के साथ)",
+          expressDesc:
+            "यहाँ Multer (disk storage) का उपयोग करके Express.js बैकएंड में फ़ाइल अपलोड को संभालने और उन्हें Cloudonix Vault में अपलोड करने का पूरा सेटअप दिया गया है:",
+          esmHeading: "ES Modules (ESM) - Async/Await",
+          esmDesc:
+            "यदि आपका प्रोजेक्ट ES Modules (import/export) का समर्थन करता है, तो इस आधुनिक शैली का उपयोग करें।",
+          esmPromiseHeading: "ES Modules (ESM) - Promise Chain",
+          esmPromiseDesc:
+            "ES Modules वातावरण में मानक Promise .then() और .catch() हैंडलर चेन का उपयोग करें।",
+          cjsHeading: "CommonJS (CJS) - Async/Await",
+          cjsDesc:
+            "यदि आप async/await के साथ लीगेसी Node.js CommonJS (require) का उपयोग कर रहे हैं, तो इस शैली का उपयोग करें।",
+          cjsPromiseHeading: "CommonJS (CJS) - Promise Chain",
+          cjsPromiseDesc:
+            "लीगेसी Node.js CommonJS वातावरण में Promise हैंडलर चेन का उपयोग करें।",
+          bunHeading: "Bun इंटीग्रेशन",
+          bunDesc:
+            "यदि आप Bun रनटाइम वातावरण में काम कर रहे हैं, तो फ़ाइलों को अपलोड करने के लिए मूल Bun.file API का उपयोग कर सकते हैं:",
           apiReference: "SDK API संदर्भ",
           apiInitDesc: "एक नया क्लाउडोनिक्स अपलोडर क्लाइंट शुरू करता है।",
           apiKeyReq:
@@ -581,23 +617,43 @@ uploader.upload(file)
         express: `import express from 'express';
 import multer from 'multer';
 import cloudonix from 'cloudonix';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const app = express();
-const upload = multer({ storage: multer.memoryStorage() });
+
+// Configure multer to save files on disk
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const uploadDir = './uploads';
+        // Ensure the upload directory exists
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+        cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+        // Generate a unique filename using timestamp and random number
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
 
 const uploader = new cloudonix({
     api_key: 'YOUR_CLOUDONIX_API_KEY'
 });
 
-app.post('/upload', upload.single('image'), async (req, res) => {
+app.post('/upload', upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'No file uploaded' });
         }
 
-        // Convert Multer Buffer to File object
-        const fileBlob = new Blob([req.file.buffer], { type: req.file.mimetype });
-        const file = new File([fileBlob], req.file.originalname, { type: req.file.mimetype });
+        // Read file from disk and convert to standard File object
+        const buffer = fs.readFileSync(req.file.path);
+        const file = new File([buffer], req.file.originalname, { type: req.file.mimetype });
 
         const response = await uploader.upload(file);
         
@@ -608,6 +664,15 @@ app.post('/upload', upload.single('image'), async (req, res) => {
         }
     } catch (err) {
         res.status(500).json({ error: err.message });
+    } finally {
+        // Always clean up the temporary file from the disk after upload/error
+        if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+            try {
+                fs.unlinkSync(req.file.path);
+            } catch (cleanupError) {
+                console.error('Error deleting temporary file:', cleanupError);
+            }
+        }
     }
 });
 
@@ -1204,31 +1269,6 @@ console.log(response);`,
             break;
 
           case "usage":
-            const usageLanguages = [
-              { id: "esm", label: "ESM (Async/Await)", type: "javascript" },
-              {
-                id: "esm_promise",
-                label: "ESM (Promises)",
-                type: "javascript",
-              },
-              {
-                id: "cjs",
-                label: "CommonJS (Async/Await)",
-                type: "javascript",
-              },
-              {
-                id: "cjs_promise",
-                label: "CommonJS (Promises)",
-                type: "javascript",
-              },
-              { id: "express", label: "Node + Express", type: "javascript" },
-              { id: "bun", label: "Bun", type: "javascript" },
-            ];
-            const activeLangObj = usageLanguages.find(
-              (l) => l.id === state.activeUsageLang,
-            );
-            const activeCode = usageSnippets[state.activeUsageLang];
-
             html = `
               <div class="w-full space-y-12">
                 <div class="space-y-4">
@@ -1277,32 +1317,63 @@ console.log(response);`,
                   </a>
                 </div>
 
-                <!-- Dynamic Code Switchers -->
-                <div class="space-y-6">
-                  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${t.codeImplementations}</h2>
-                    <div class="flex flex-wrap gap-2">
-                      ${usageLanguages
-                        .map((lang) => {
-                          const isLangActive =
-                            state.activeUsageLang === lang.id;
-                          return `
-                          <button onclick="setUsageLang('${lang.id}')"
-                            class="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
-                              isLangActive
-                                ? "bg-cyan-500/10 text-cyan-600 border-cyan-500/20 dark:text-cyan-400 dark:border-cyan-500/20 font-semibold"
-                                : "bg-white dark:bg-slate-950 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 border-slate-200 dark:border-slate-800"
-                            }">
-                            ${lang.label}
-                          </button>
-                        `;
-                        })
-                        .join("")}
-                    </div>
+                <!-- Code Implementations -->
+                <div class="space-y-10">
+                  <h2 class="text-3xl font-extrabold text-slate-900 dark:text-slate-100">${t.codeImplementations}</h2>
+
+                  <!-- ESM (Async/Await) -->
+                  <div class="space-y-3">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">${t.esmHeading}</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                      ${t.esmDesc}
+                    </p>
+                    ${renderCodeBlockHtml(usageSnippets.esm, "javascript", "btn-copy-esm")}
                   </div>
 
-                  <!-- Injected code box -->
-                  ${renderCodeBlockHtml(activeCode, activeLangObj.type, "btn-copy-usage")}
+                  <!-- ESM (Promises) -->
+                  <div class="space-y-3 pt-8 border-t border-slate-200 dark:border-slate-800/80">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">${t.esmPromiseHeading}</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                      ${t.esmPromiseDesc}
+                    </p>
+                    ${renderCodeBlockHtml(usageSnippets.esm_promise, "javascript", "btn-copy-esm-promise")}
+                  </div>
+
+                  <!-- CommonJS (Async/Await) -->
+                  <div class="space-y-3 pt-8 border-t border-slate-200 dark:border-slate-800/80">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">${t.cjsHeading}</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                      ${t.cjsDesc}
+                    </p>
+                    ${renderCodeBlockHtml(usageSnippets.cjs, "javascript", "btn-copy-cjs")}
+                  </div>
+
+                  <!-- CommonJS (Promises) -->
+                  <div class="space-y-3 pt-8 border-t border-slate-200 dark:border-slate-800/80">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">${t.cjsPromiseHeading}</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                      ${t.cjsPromiseDesc}
+                    </p>
+                    ${renderCodeBlockHtml(usageSnippets.cjs_promise, "javascript", "btn-copy-cjs-promise")}
+                  </div>
+
+                  <!-- Bun -->
+                  <div class="space-y-3 pt-8 border-t border-slate-200 dark:border-slate-800/80">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">${t.bunHeading}</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                      ${t.bunDesc}
+                    </p>
+                    ${renderCodeBlockHtml(usageSnippets.bun, "javascript", "btn-copy-bun")}
+                  </div>
+
+                  <!-- Express.js -->
+                  <div class="space-y-3 pt-8 border-t border-slate-200 dark:border-slate-800/80">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">${t.expressHeading}</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                      ${t.expressDesc}
+                    </p>
+                    ${renderCodeBlockHtml(usageSnippets.express, "javascript", "btn-copy-express-backend")}
+                  </div>
                 </div>
               </div>
             `;

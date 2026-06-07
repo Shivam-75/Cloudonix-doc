@@ -70,6 +70,88 @@ async function main() {
 main();
 ```
 
+#### 3. Express.js API Route (with Multer Uploads)
+Use this setup to handle file uploads in an Express.js backend using Multer (disk storage):
+
+```bash
+npm install express multer
+```
+
+```javascript
+const express = require('express');
+const multer = require('multer');
+const cloudonix = require('cloudonix');
+const fs = require('node:fs');
+const path = require('node:path');
+
+const app = express();
+
+// Configure multer to save files on disk
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadDir = './uploads';
+    // Ensure the upload directory exists
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    // Generate a unique filename using timestamp and random number
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
+const uploader = new cloudonix({
+  api_key: 'YOUR_CLOUDONIX_API_KEY'
+});
+
+app.post('/upload', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, error: 'No file uploaded' });
+    }
+
+    // Read the uploaded file from disk and convert to standard File object
+    const buffer = fs.readFileSync(req.file.path);
+    const file = new File([buffer], req.file.originalname, {
+      type: req.file.mimetype
+    });
+
+    // Upload to Cloudonix Vault
+    const response = await uploader.upload(file);
+
+    if (response.success) {
+      res.status(200).json({
+        success: true,
+        message: 'Uploaded successfully!',
+        url: response.data.data.imageUrl // URL of the uploaded file
+      });
+    } else {
+      res.status(500).json({ success: false, error: response.error });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  } finally {
+    // Always clean up the temporary file from the disk after upload/error
+    if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (cleanupError) {
+        console.error('Error deleting temporary file:', cleanupError);
+      }
+    }
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+```
+
 ---
 
 ## ✨ Features of the Documentation Site
